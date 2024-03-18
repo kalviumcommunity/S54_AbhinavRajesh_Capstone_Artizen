@@ -3,5 +3,6 @@ const router = express.Router();
 const handlers = require('./handlers');
 
 router.get('/artworks', handlers.getAllArtworks);
+router.post('/artworks', handlers.createArtwork);
 
 module.exports = router;

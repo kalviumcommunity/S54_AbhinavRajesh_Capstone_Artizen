@@ -1,5 +1,3 @@
-const Art = require('./Schema');
-
 exports.getAllArtworks = async (req, res) => {
     try {
         const artworks = await Art.find();
@@ -9,3 +7,11 @@ exports.getAllArtworks = async (req, res) => {
     }
 };
 
+exports.createArtwork = async (req, res) => {
+    
+        try {
+            res.send("Posted Successfully");
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    };
