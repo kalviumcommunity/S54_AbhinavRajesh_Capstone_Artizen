@@ -4,5 +4,7 @@ const handlers = require('./handlers');
 
 router.get('/artworks', handlers.getAllArtworks);
 router.post('/artworks', handlers.createArtwork);
+router.put('/artworks/:id', handlers.updateArtwork);
+router.delete('/artworks/:id', handlers.deleteArtwork);
 
 module.exports = router;
