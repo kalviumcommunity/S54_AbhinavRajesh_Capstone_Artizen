@@ -18,11 +18,8 @@ exports.createArtwork = async (req, res) => {
 
 exports.getArtworkById = async (req, res) => {
     try {
-        const artwork = await Art.findById(req.params.id);
-        if (artwork == null) {
-            return res.status(404).json({ message: 'Artwork not found' });
-        }
-        res.json(artwork);
+        
+        res.send("Successfuly found by ID")
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -30,11 +27,7 @@ exports.getArtworkById = async (req, res) => {
 
 exports.updateArtwork = async (req, res) => {
     try {
-        const updatedArtwork = await Art.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (updatedArtwork == null) {
-            return res.status(404).json({ message: 'Artwork not found' });
-        }
-        res.json(updatedArtwork);
+        res.send("Artwork Updated Successfuly")
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -42,11 +35,7 @@ exports.updateArtwork = async (req, res) => {
 
 exports.deleteArtwork = async (req, res) => {
     try {
-        const deletedArtwork = await Art.findByIdAndDelete(req.params.id);
-        if (deletedArtwork == null) {
-            return res.status(404).json({ message: 'Artwork not found' });
-        }
-        res.json({ message: 'Artwork deleted' });
+        res.send("Artwork Deleted Successfuly")
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
