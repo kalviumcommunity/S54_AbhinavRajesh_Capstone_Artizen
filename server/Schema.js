@@ -1,23 +1,24 @@
 const mongoose = require('mongoose');
 
 const artworkSchema = new mongoose.Schema({
-    Title: {
+    title: {
         type: String,
         required: true
     },
-    Description: {
+    description: {
         type: String,
         required: true
     },
-    Category: {
+    category: {
         type: String,
         required: true
     },
-    Author: {
+    author: {
         type: String,
-        required: true
+        required: true,
+        index: true,
     },
-    Image: {
+    image: {
         type: String,
         required: true
     }
