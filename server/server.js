@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const routes = require('./route')
+const DBconnection = require('./DBconnection')
 
 const dotenv = require('dotenv').config()
 const app = express()
@@ -11,6 +12,7 @@ console.log('port: ', port);
 app.use(express.json())
 app.use(cors())
 
+process.env.MONGO_URI ? DBconnection(): console.log(" MONGO URI is undefined ")
 
 app.use('/api', routes)
 
