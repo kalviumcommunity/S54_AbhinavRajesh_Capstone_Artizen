@@ -12,7 +12,7 @@ console.log('port: ', port);
 app.use(express.json())
 app.use(cors())
 
-DBconnection()
+process.env.MONGO_URI ? DBconnection(): console.log(" MONGO URI is undefined ")
 
 app.use('/api', routes)
 
