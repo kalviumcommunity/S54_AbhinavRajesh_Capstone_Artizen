@@ -1,3 +1,6 @@
+const Art = require('./Schema.js');
+
+
 exports.getAllArtworks = async (req, res) => {
     try {
         const artworks = await Art.find();
