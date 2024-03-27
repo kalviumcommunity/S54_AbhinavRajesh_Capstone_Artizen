@@ -67,9 +67,9 @@ const Home = () => {
                 <h5>Top Artworks</h5>
               </div>
                 <div className='frame-div'>
-                  <div className='frame'></div>
-                  <div className='frame'></div>
-                  <div className='frame'></div>
+                  <div className='frame'><img src="https://preview.redd.it/l4bpx9gkial71.jpg?width=640&crop=smart&auto=webp&s=c449fba5dc6dd76d61ee34786afdf7d9ddbc5fb7" alt="" style={{height:'100%',width:'100%'}} /></div>
+                  <div className='frame'><img src="https://www.topalski.com/wp-content/uploads/2016/04/Fine-Art-Eventide-Sea-and-Waves-Original-Oil-Painting-on-Canvas-by-artist-Darko-Topalski1.jpg" alt="" style={{height:'100%',width:'100%'}} /></div>
+                  <div className='frame'><img src="https://i.pinimg.com/originals/db/9b/a1/db9ba1d9f4adfcf0626fc97a3a97193c.jpg" alt="" style={{height:'100%',width:'100%'}} /></div>
               </div>
             </div>
           </ParallaxLayer>
