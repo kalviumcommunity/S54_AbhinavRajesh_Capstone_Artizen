@@ -1,0 +1,209 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body{
+    margin: 0;
+    background-color: black;
+    text-align: center;
+  }
+  
+  .navbar{
+    padding: 6vh 6vw;
+    display: flex;
+    justify-content: space-between;
+  }
+  .logopic{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+  
+  .nav-icons{
+    width: 24vw;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .nav-icons button{
+    border: none;
+    color: white;
+    background: none;
+    font-size: 1rem;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 700;
+  }
+  
+  .user-btn{
+    display: flex;
+    justify-content: space-between;
+    width: 15vw;
+  }
+  
+  .user-btn button{
+    background: none;
+    color: white;
+    font-size: 1rem;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 700;
+  }
+  
+  .login-btn{
+    border: none;
+    font-size: 1rem;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 700;
+  }
+  
+  .sign-up{
+    border-radius: 50px;
+    width: 8vw;
+    border: 1px solid white;
+    font-size: 0.3rem;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 700;
+  }
+  
+  .logo-div{
+    padding-right: 7vw;
+  }
+  .main::-webkit-scrollbar{
+    display: none;
+  }
+  h1{
+    font-family: heverly;
+    font-size: 20vw;
+    color: white;
+    font-weight: 100;
+    text-align: center;
+  }
+  
+  .hero-img{
+    margin: 0 auto;
+  }
+  .img-layer{
+    margin: 0 auto;
+  }
+  
+  h6{
+    margin-top: 3vh;
+    color: white;
+    font-size: 0.8rem;
+    letter-spacing: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .fade-in {
+    animation: fadeIn 1s ease-out;
+    opacity: 0;
+  }
+  
+  .final-state {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .discover-section{
+    display: flex;
+    justify-content: space-evenly;
+  }
+  
+  .sub-heading{
+    font-family: heverly;
+    font-size: 6rem;
+    font-weight: 500;
+  }
+  .discover-section-text{
+    padding-top: 20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 40vw;
+    height: 30vh;
+  }
+  
+  .discover-section-text > p {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #a1a1a1;
+    font-size: 1.5rem;
+  }
+  
+  
+  .discover-section-text > h5{
+    font-size: 2rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #dcdcdc;
+    font-weight: 300;
+  }
+  
+  .box-div{
+    display: flex;
+    justify-content: center;
+    width: 80vw;
+    margin-top: 10vh;
+  }
+  .grey-box{
+    background-color: #222222;
+    width: 60vw;
+    height: 60vh;
+    border-radius: 50px;
+  }
+  
+  .testimonial-section-text > h5 {
+    font-size: 2rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #dcdcdc;
+    font-weight: 300;
+  }
+  body.parallax-active {
+    overflow: hidden;
+  }
+  
+  
+  .frame{
+    background-image: url(../src/assets/frame.png);
+    height: 446px;
+    width: 333px;
+  }
+  
+  
+  .frame-div{
+  
+    display: flex;
+    justify-content: space-evenly;
+    width: 100vw;
+    margin-top: 10vh;
+  }
+  
+  .featured-section{
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  
+  .testimonial-section{
+    margin-top: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .featured-section-text > h5{
+    font-size: 2rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #dcdcdc;
+    font-weight: 300;
+  }
