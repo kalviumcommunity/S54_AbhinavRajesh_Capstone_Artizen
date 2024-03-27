@@ -17,9 +17,6 @@ const Home = () => {
 
   const handleAnimationEnd = () => {
     setAnimationComplete(true);
-    document.body.classList.add('parallax-active');
-    const heroImage = document.querySelector('.fade-in');
-    heroImage.style.animation = 'none';
   };
 
   return (
