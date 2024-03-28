@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import pic from '../assets/1.png';
 import man from '../assets/pic1.png'
 import logo from '../assets/logo.png';
-import '../App.css'
+import '../index.css'
 import frame from '../assets/frame.png'
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
 import { Box, Flex, Text } from '@chakra-ui/react';
@@ -21,20 +21,7 @@ const Home = () => {
 
   return (
     <div>
-      <div className='navbar'>
-        <div className='nav-icons'>
-          <button>Discover</button>
-          <button>Creators</button>
-          <button>Testimonials</button>
-        </div>
-        <div className='logo-div'>
-          <img src={logo} alt="" className='logopic' />
-        </div>
-        <div className='user-btn'>
-          <button className='login-btn'>Log In</button>
-          <button className='sign-up'>Sign Up</button>
-        </div>
-      </div>
+      
       <div>
         <Parallax pages={2.85} ref={parallaxRef} className='main'>
           <ParallaxLayer offset={0} speed={1}>
