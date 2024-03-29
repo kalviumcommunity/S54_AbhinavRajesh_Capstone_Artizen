@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Parallax, ParallaxLayer } from '@react-spring/parallax';
 import axios from 'axios';
-import { toast } from 'react-toastify'; // Import toast from react-toastify
+import { toast } from 'react-toastify'; 
 import '../App.css';
-import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for react-toastify
+import 'react-toastify/dist/ReactToastify.css'; 
 
 const ArtworkGrid = () => {
   const [artworks, setArtworks] = useState([]);
@@ -12,11 +11,11 @@ const ArtworkGrid = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:4000/api/data/artworks');
-        console.log('Artworks response:', response.data); // Log the response data
+        console.log('Artworks response:', response.data);
         setArtworks(response.data);
       } catch (error) {
         console.error('Error fetching artworks:', error);
-        toast.error('Failed to fetch artworks. Please try again later.'); // Display toast on axios.get failure
+        toast.error('Failed to fetch artworks. Please try again later.'); 
       }
     };
 
