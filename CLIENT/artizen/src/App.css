@@ -79,3 +79,13 @@ body{
   text-decoration: none;
   cursor: pointer;
 }
+
+.artworks{
+  margin-top: 5vh;
+  justify-items: center;
+  color: white;
+  font-family: heverly;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  row-gap: 15vh;
+}
