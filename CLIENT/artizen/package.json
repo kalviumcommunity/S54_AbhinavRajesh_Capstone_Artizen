@@ -13,6 +13,8 @@
     "@chakra-ui/react": "^2.8.2",
     "@clerk/clerk-react": "^4.30.7",
     "@react-spring/parallax": "^9.7.3",
+    "aos": "^2.3.4",
+    "axios": "^1.6.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",

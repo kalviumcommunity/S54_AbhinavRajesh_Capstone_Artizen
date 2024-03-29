@@ -8,14 +8,22 @@ const Navbar = () => {
   return (
     <div className='navbar'>
         <div className='nav-icons'>
-          <button>Discover</button>
+          <Link to='/discover' style={{display:'flex',alignItems:'center'}}>
+            <button>Discover</button>
+          </Link>
+          <Link to='/creators' style={{display:'flex',alignItems:'center'}}>
           <button>Creators</button>
+          </Link>
+          <Link to='/testimonials' style={{display:'flex',alignItems:'center'}}>
           <button>Testimonials</button>
+          </Link>
         </div>
         <div className='logo-div'>
+          <Link to='/'>
           <img src={logo} alt="" className='logopic' />
+          </Link>
         </div>
-        <div className='space'>
+        <div className='space' style={{display:'flex',alignItems:'center'}}>
         <SignedOut>
           <SignInButton>
             <button style={{width:"8vw",

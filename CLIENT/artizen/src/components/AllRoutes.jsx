@@ -3,6 +3,9 @@ import Home from './Home'
 import NoPage from './ErrorPage'
 import { Route, Routes } from 'react-router-dom'
 import '../index.css'
+import Discover from './Discover'
+import Creators from './Creators'
+import Testimonials from './Testimonials'
 
 const AllRoutes = () => {
   return (
@@ -10,6 +13,9 @@ const AllRoutes = () => {
         <Routes>
             <Route path='/' element={<Home />} />
             <Route path="*" element={<NoPage />} />
+            <Route path='/discover' element={<Discover />} />
+            <Route path='/creators' element={<Creators />} />
+            <Route path='/testimonials' element={<Testimonials />} />
         </Routes>
     </>
   )
