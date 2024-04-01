@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 
 const Creators = () => {
-  return (
-    <div>Creators</div>
-  )
-}
 
-export default Creators
+
+  return (
+    <>
+    <div>
+      <h1>Creators of Artizen</h1>
+    </div>
+    <div>
+
+    </div>
+    </>
+  );
+};
+
+export default Creators;
