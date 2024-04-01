@@ -11,8 +11,8 @@ const Navbar = () => {
   const toggleMenu = () => {
     setShowMenu(!showMenu);
     if (windowWidth < 1200) {
-      document.body.classList.toggle('no-scroll'); // Toggle body scroll
-      document.querySelector('.blur-overlay').classList.toggle('active'); // Toggle blur overlay
+      document.body.classList.toggle('no-scroll');
+      document.querySelector('.blur-overlay').classList.toggle('active'); 
     }
   };
 
@@ -20,9 +20,9 @@ const Navbar = () => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
       if (window.innerWidth >= 1200) {
-        setShowMenu(false); // Hide menu when window width is 1200px or more
-        document.body.classList.remove('no-scroll'); // Ensure body scroll is enabled
-        document.querySelector('.blur-overlay').classList.remove('active'); // Ensure blur overlay is removed
+        setShowMenu(false); 
+        document.body.classList.remove('no-scroll'); 
+        document.querySelector('.blur-overlay').classList.remove('active'); 
       }
     };
 
