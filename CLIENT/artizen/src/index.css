@@ -8,7 +8,9 @@
     background-color: black;
     text-align: center;
   }
-  
+  h1{
+    text-align: center;
+  }
   .navbar{
     padding: 6vh 6vw;
     display: flex;
@@ -67,9 +69,7 @@
     font-weight: 700;
   }
   
-  .logo-div{
-    padding-right: 16vw;
-  }
+  
   .main::-webkit-scrollbar{
     display: none;
   }
@@ -211,3 +211,151 @@
     font-weight: 300;
   }
 
+
+  .artworks{
+    margin-top: 5vh;
+    justify-items: center;
+    color: white;
+    font-family: heverly;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    row-gap: 15vh;
+  }
+
+  @media screen and (max-width: 1200px){
+    .nav-icons{
+      
+      margin-top: 15vh;
+      position: fixed;
+      height: 30%;
+      flex-direction: column;
+    }
+  }
+
+  @media screen and (max-width: 1150px) {
+    .container {
+      padding: 0 2rem;
+    }
+  
+    h1 {
+      font-size: 12vw;
+    }
+  
+    .artworks {
+      grid-template-columns: repeat(2,1fr);
+      gap: 0.5rem;
+    }
+  }
+
+  @media screen and (max-width: 950px){
+    .frame{
+      width: 330px;
+      height: 430px;
+    }
+    .logo-div{
+      margin-left: 20vw;
+    }
+  }
+  
+  
+  @media screen and (max-width: 800px){
+    .artworks {
+      grid-template-columns: repeat(1,1fr);
+      gap: 0.5rem;
+    }
+    
+  }
+
+
+
+  @media screen and (max-width: 500px){
+    .artworks {
+      grid-template-columns: repeat(1,1fr);
+      gap: 0.5rem;
+    }
+  }
+
+  .hamburger-menu {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .line {
+    width: 30px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+  }
+  
+  .navbar {
+    position: relative;
+    z-index: 1; /* Ensure navbar is above the overlay */
+  }
+  
+  .blur-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.695); /* Semi-transparent black background */
+    z-index: 0; /* Ensure overlay is below navbar */
+    display: none; /* Initially hide the overlay */
+  }
+  
+  .nav-icons {
+    position: relative; 
+    z-index: 1; 
+  }
+  @media screen and (max-width: 1200px) {
+
+    .logo-div{
+      margin-left: 41vw;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .nav-icons {
+      margin-top: 15vh;
+      position: fixed;
+      height: 30%;
+      flex-direction: column;
+    }
+  
+    .blur-overlay.active {
+      display: block;
+    }
+  }
+
+  @media screen and (min-width: 1200px){
+    .logo-div{
+      padding-right: 16vw;
+    }
+  }
+
+  .hamburger-menu{
+    margin-top: 1.5vh;
+    position: fixed;
+    z-index: 1;
+  }
+  
+  .discover-hero-text{
+    font-size: 80px;
+  }
+  @media screen and (max-width: 500px){
+    .clerk-btn{
+      margin-left: '100px';
+    }
+  }
+  
+  @media screen and (max-width: 600px){
+    .discover-hero-text{
+      font-size: '100px';
+    }
+  }
+  @media screen and (max-width: 420px){
+    .discover-hero-text{
+      margin-left: 30px;
+    }
+  }

@@ -25,7 +25,7 @@ const ArtworkGrid = () => {
   return (
     <>
       <div className="container">
-        <h1 style={{ fontSize: '8vw' }}>Discover</h1>
+        <h1 className='discover-hero-text'>Discover</h1>
         <div className="artworks">
           {artworks.map((artwork, index) => (
             <div key={index} className="artwork">
