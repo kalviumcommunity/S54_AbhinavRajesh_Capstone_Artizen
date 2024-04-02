@@ -1,5 +1,5 @@
-const {Art} = require('./Schema.js');
-
+const {Art, Testimonial} = require('./Schema.js');
+const {User} = require('./Schema.js')
 
 exports.getAllArtworks = async (req, res) => {
     try {
@@ -65,3 +65,48 @@ exports.deleteArtwork = async (req, res) => {
         return res.status(500).json({ message: error.message });
     }
 };
+
+exports.getAllUsers = async (req,res) => {
+    try {
+        const users = await User.find();
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+exports.addNewUser = async (req,res) => {
+    const users = new User({
+        username: req.body.username,
+        pfp: req.body.pfp
+    });
+    try {
+        const newUser = await users.save();
+        res.json(newUser);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+exports.getAllTestimonials = async (req,res) => {
+    try {
+        const testimonials = await Testimonial.find();
+        res.json(testimonials);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+exports.createTestimonial = async (req,res) => {
+    const testimonials = new Testimonial({
+        title: req.body.title,
+        testimonial: req.body.testimonial,
+        likes: req.body.likes,
+    });
+    try {
+        const newTestimonial = await testimonials.save();
+        res.json(newTestimonial);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
