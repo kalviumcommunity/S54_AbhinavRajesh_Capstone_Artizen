@@ -24,6 +24,34 @@ const artworkSchema = new mongoose.Schema({
     }
 });
 
-const Art = mongoose.model("artworks", artworkSchema);
+const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+    },
+    pfp: {
+        type: String,
+        required: true,
+    }
+})
 
-module.exports = {Art};
+const testimonialSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+    },
+    testimonial: {
+        type: String,
+        required: true,
+    },
+    likes: {
+        type: String,
+        required: true,
+    }
+})
+
+
+const Art = mongoose.model("artworks", artworkSchema);
+const User = mongoose.model("userdatas", userSchema);
+const Testimonial = mongoose.model("testimonialdatas", testimonialSchema);
+module.exports = {Art, User, Testimonial};
