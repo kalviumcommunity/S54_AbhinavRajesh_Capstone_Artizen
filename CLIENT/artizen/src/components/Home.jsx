@@ -1,11 +1,11 @@
 import React, { useRef, useEffect, useState } from 'react';
 import pic from '../assets/1.png';
 import man from '../assets/pic1.png'
-import logo from '../assets/logo.png';
 import '../index.css'
-import frame from '../assets/frame.png'
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
 import { Box, Flex, Text } from '@chakra-ui/react';
+import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const Home = () => {
   const [animationComplete, setAnimationComplete] = useState(false);
@@ -65,9 +65,74 @@ const Home = () => {
               <div className='testimonial-section-text'>
                 <h2 className='sub-heading'>TESTIMONIALS</h2>
                 <h5>From Users</h5>
-                <div className='box-div'>
-                  <div className='grey-box'></div>
-                </div>
+                <Carousel>
+                  <div className='carousel-div'>
+                      <div className='carousel-header'>
+                        <h3>Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus</h3>
+                      </div>
+                      <div className='carousel-body'>
+                      Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus ultrices sem vel. 
+                  Id sem sollicitudin mi tristique duis parturient consequat aenean ut. 
+                  Scelerisque id donec potenti dui aliquet. Enim ac habitant vivamus mattis egestas nisi sagittis. 
+                  Id dui venenatis sed
+                      </div>
+                  </div>
+                  <div className='carousel-div'>
+                  <div className='carousel-header'>
+                        <h3>Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus</h3>
+                      </div>
+                      <div className='carousel-body'>
+                      Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus ultrices sem vel. 
+                  Id sem sollicitudin mi tristique duis parturient consequat aenean ut. 
+                  Scelerisque id donec potenti dui aliquet. Enim ac habitant vivamus mattis egestas nisi sagittis. 
+                  Id dui venenatis sed
+                      </div>
+                  </div>
+                  <div className='carousel-div'>
+                  <div className='carousel-header'>
+                        <h3>Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus</h3>
+                      </div>
+                      <div className='carousel-body'>
+                      Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus ultrices sem vel. 
+                  Id sem sollicitudin mi tristique duis parturient consequat aenean ut. 
+                  Scelerisque id donec potenti dui aliquet. Enim ac habitant vivamus mattis egestas nisi sagittis. 
+                  Id dui venenatis sed
+                      </div>
+                  </div>
+                  <div className='carousel-div'>
+                  <div className='carousel-header'>
+                        <h3>Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus</h3>
+                      </div>
+                      <div className='carousel-body'>
+                      Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus ultrices sem vel. 
+                  Id sem sollicitudin mi tristique duis parturient consequat aenean ut. 
+                  Scelerisque id donec potenti dui aliquet. Enim ac habitant vivamus mattis egestas nisi sagittis. 
+                  Id dui venenatis sed
+                      </div>
+                  </div>
+                  <div className='carousel-div'>
+                  <div className='carousel-header'>
+                        <h3>Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus</h3>
+                      </div>
+                      <div className='carousel-body'>
+                      Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus ultrices sem vel. 
+                  Id sem sollicitudin mi tristique duis parturient consequat aenean ut. 
+                  Scelerisque id donec potenti dui aliquet. Enim ac habitant vivamus mattis egestas nisi sagittis. 
+                  Id dui venenatis sed
+                      </div>
+                  </div>
+                  <div className='carousel-div'>
+                  <div className='carousel-header'>
+                        <h3>Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus</h3>
+                      </div>
+                      <div className='carousel-body'>
+                      Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus ultrices sem vel. 
+                  Id sem sollicitudin mi tristique duis parturient consequat aenean ut. 
+                  Scelerisque id donec potenti dui aliquet. Enim ac habitant vivamus mattis egestas nisi sagittis. 
+                  Id dui venenatis sed
+                      </div>
+                  </div>
+                </Carousel>
               </div>
             </div>
           </ParallaxLayer>

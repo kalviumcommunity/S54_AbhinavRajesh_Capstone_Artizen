@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const handlers = require('./handlers');
+const bodyParser = require('body-parser')
 
 router.get('/data/artworks', handlers.getAllArtworks);
 router.get('/artworks/:id', handlers.getArtworkById);
@@ -11,4 +12,6 @@ router.get('/users', handlers.getAllUsers);
 router.post('/signup', handlers.addNewUser);
 router.get('/testimonials', handlers.getAllTestimonials)
 router.post('/testimonials', handlers.createTestimonial)
+router.post('/webhooks', bodyParser.raw({type: "application/json" }), handlers.handleWebhook)
+
 module.exports = router;

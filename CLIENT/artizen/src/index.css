@@ -11,6 +11,11 @@
   h1{
     text-align: center;
   }
+
+  body::-webkit-scrollbar{
+    display: none;
+  }
+
   .navbar{
     padding: 6vh 6vw;
     display: flex;
@@ -359,3 +364,25 @@
       margin-left: 30px;
     }
   }
+
+  .carousel-div{
+    background-color: #222222;
+    margin: 0 15%;
+    height: 70vh;
+    display: flex;
+    flex-direction: column;
+    border-radius: 50px;
+  }
+.carousel-header{
+  height: 10vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5% 0;
+}
+
+
+.carousel-body{
+  padding: 5%;
+  height: 100%;
+}

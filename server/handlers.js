@@ -1,6 +1,8 @@
 const {Art, Testimonial} = require('./Schema.js');
 const {User} = require('./Schema.js')
 
+const Webhook = require('svix')
+
 exports.getAllArtworks = async (req, res) => {
     try {
         const artworks = await Art.find();
@@ -108,5 +110,35 @@ exports.createTestimonial = async (req,res) => {
         res.json(newTestimonial);
     } catch (error) {
         res.status(500).json({ message: error.message });
+    }
+}
+
+exports.handleWebhook = async (req,res) => {
+    try{
+        const payloadString = req.body.toString();
+        const svixHeaders = req.headers;
+
+        const wh = new Webhook(process.env.CLERK_WEBHOOK_SECRET_KEY);
+        const evt = wh.verify(payloadString, svixHeaders);
+
+        const {id, ...attributes } = evt.data;
+
+        const eventType = evt.type;
+
+        if(eventType === 'user.created'){
+            console.log(`User ${id} is ${eventType}`)
+            console.log(attributes)
+        }
+
+        res.status(200).json({
+            success:true,
+            message: 'Webhook recieved',
+        })
+
+    }catch(err){
+        res.status(400).json({
+            success: false,
+            message: err.message,
+        })
     }
 }
