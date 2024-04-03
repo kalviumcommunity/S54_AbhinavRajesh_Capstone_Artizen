@@ -386,3 +386,119 @@
   padding: 5%;
   height: 100%;
 }
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #222222;
+  padding: 20px;
+  border-radius: 20px;
+  max-height: 60vh;
+  height: 60vh;
+  max-width: 50vw;
+  width: 50vw;
+  z-index: 1000;
+  color: white;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.modal > form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 70%;
+  width: 70%;
+}
+
+.form-input{
+  width: 20vw;
+  height: 4vh;
+  border-radius: 5px;
+}
+
+.modal > form > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.description-input{
+  height: 10vh;
+  width: 20vw;
+  max-width: 20vw;
+  max-height: 10vh;
+  border-radius: 5px;
+  resize: none;
+  outline: none;
+  padding: 4px;
+  font-size: 16px;
+}
+
+.modal > form > button {
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  font-family: Helvetica;
+  letter-spacing: 1px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.modal > h2 {
+  font-family: heverly;
+  letter-spacing: 8px;
+  font-size: 3vw;
+}
+
+.modal > form > div > h3 {
+  font-family: Helvetica;
+  font-size: 1.4vw;
+}
+
+.modal > form > div > input {
+  font-family: Helvetica;
+  letter-spacing: 1px;
+  font-weight: 500;
+  padding: 0 5px;
+  outline: none;
+  font-size:16px;
+}
+
+.upload-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 15vw;
+  height: 7vh;
+  left: 80%;
+  top: 85%;
+  color: white;
+  font-family: heverly;
+  font-size:2vw;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding-top: 1vh;
+  border-radius: 50px;
+  border: none;
+  background-color: #222222;
+  border: 3px solid #f6c605;
+}
