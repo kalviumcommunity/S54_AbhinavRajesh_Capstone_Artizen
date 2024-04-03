@@ -12,6 +12,5 @@ router.get('/users', handlers.getAllUsers);
 router.post('/signup', handlers.addNewUser);
 router.get('/testimonials', handlers.getAllTestimonials)
 router.post('/testimonials', handlers.createTestimonial)
-router.post('/webhooks', bodyParser.raw({type: "application/json" }), handlers.handleWebhook)
 
 module.exports = router;
