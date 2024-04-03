@@ -20,16 +20,32 @@ const ArtworkGrid = () => {
 
   useEffect(() => {
     fetchData();
+
+    return () => {
+
+    };
   }, []);
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/api/data/artworks');
+      const source = axios.CancelToken.source();
+      const response = await axios.get('http://localhost:4000/api/data/artworks', {
+        cancelToken: source.token
+      });
       setArtworks(response.data);
     } catch (error) {
-      console.error('Error fetching artworks:', error);
-      toast.error('Failed to fetch artworks. Please try again later.');
+      if (axios.isCancel(error)) {
+      } else {
+        console.error('Error fetching artworks:', error);
+        toast.error('Failed to fetch artworks. Please try again later.');
+      }
     }
+  
+    return () => {
+      if (source) {
+        source.cancel('Request cancelled by cleanup');
+      }
+    };
   };
 
   const handleInputChange = (e) => {
