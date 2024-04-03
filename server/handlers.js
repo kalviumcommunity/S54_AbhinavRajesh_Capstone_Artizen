@@ -126,9 +126,17 @@ exports.handleWebhook = async (req,res) => {
         const eventType = evt.type;
 
         if(eventType === 'user.created'){
-            console.log(`User ${id} is ${eventType}`)
-            console.log(attributes)
+            const username = attributes.first_name;
+            const pfp = attributes.image_url;
+        
+            const user = new User({
+                username: username,
+                pfp: pfp,
+            })
+            await user.save();
+            console.log('User is created')
         }
+
 
         res.status(200).json({
             success:true,
