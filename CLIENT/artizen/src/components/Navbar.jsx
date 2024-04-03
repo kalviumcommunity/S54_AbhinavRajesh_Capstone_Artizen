@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import logo from '../assets/logo.png';
 import '../index.css';
 import { Link } from 'react-router-dom';
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, SignInButton, useClerk, UserButton } from "@clerk/clerk-react";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const {user} = useClerk()
+  console.log(user);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
