@@ -5,9 +5,12 @@ import Modal from 'react-modal';
 import '../App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import uploadIcon from '../assets/uploadicon.png'
+import { useClerk } from '@clerk/clerk-react';
 Modal.setAppElement('#root');
 
 const ArtworkGrid = () => {
+
+  
   const [artworks, setArtworks] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -18,46 +21,61 @@ const ArtworkGrid = () => {
     description: '',
   });
 
+  
+
+  const {user} = useClerk()
+  // console.log(user)
+  
+
   useEffect(() => {
-    fetchData();
 
-    return () => {
 
+    const fetchData = async () => {
+
+
+      try {
+        const response = await axios.get('https://artizen.onrender.com/api/data/artworks');
+        setArtworks(response.data);
+        console.log(user)
+
+      } catch (error) {
+        if (axios.isCancel(error)) {
+        } else {
+          console.error('Error fetching artworks:', error);
+          toast.error('Failed to fetch artworks. Please try again later.');
+        }
+      }
     };
+
+    fetchData()
+
+
   }, []);
 
-  const fetchData = async () => {
-    try {
-      const source = axios.CancelToken.source();
-      const response = await axios.get('http://localhost:4000/api/data/artworks', {
-        cancelToken: source.token
-      });
-      setArtworks(response.data);
-    } catch (error) {
-      if (axios.isCancel(error)) {
-      } else {
-        console.error('Error fetching artworks:', error);
-        toast.error('Failed to fetch artworks. Please try again later.');
-      }
-    }
-  
-    return () => {
-      if (source) {
-        source.cancel('Request cancelled by cleanup');
-      }
-    };
-  };
+  // useEffect(() => {
 
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  //   return () => {
+  //     const source = axios.CancelToken.source();
+  //     source.cancel('Request cancelled by cleanup');
+  //   };
+  // }, []);
+
+  
+  
+
+  const handleUserUpload = async () => {
+    const { fullName, imageUrl } = user
+    try{
+      await axios.post('http://localhost:4000/api/signup', { "fullName":fullName, "imageUrl" : imageUrl });
+    }catch(err){
+      console.error(err)
+    }
+  }
 
   const handleUpload = async () => {
     try {
-      await axios.post('http://localhost:4000/api/artworks', formData);
-      toast.success('Artwork uploaded successfully.');
-      fetchData();
-      setModalIsOpen(false);
+      await axios.post('https://artizen.onrender.com/api/artworks', formData);
+      toast.success('Artwork uploaded successfully.');      
       setFormData({
         title: '',
         category: '',
@@ -65,6 +83,7 @@ const ArtworkGrid = () => {
         image: '',
         description: '',
       });
+      setModalIsOpen(false);
     } catch (error) {
       console.error('Error uploading artwork:', error);
       toast.error('Failed to upload artwork. Please try again later.');
@@ -118,7 +137,10 @@ const ArtworkGrid = () => {
             <h3>Description :</h3>
             <textarea placeholder='description' name='description' className='description-input' type='text' value={formData.description} onChange={handleInputChange}></textarea>
           </div>
-          <button type="button" onClick={handleUpload}>Upload</button>
+          <button type="button" onClick={()=>{
+            handleUserUpload();
+            handleUpload();
+          }}>Upload</button>
         </form>
       </Modal>
     </>

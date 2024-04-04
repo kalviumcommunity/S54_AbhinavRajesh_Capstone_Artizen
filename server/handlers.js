@@ -77,13 +77,15 @@ exports.getAllUsers = async (req,res) => {
 
 exports.addNewUser = async (req,res) => {
     const users = new User({
-        username: req.body.username,
-        pfp: req.body.pfp
+        username: req.body.fullName,
+        pfp: req.body.imageUrl
     });
+    console.log(users)
     try {
         const newUser = await users.save();
         res.json(newUser);
     } catch (error) {
+        console.log(error)
         res.status(500).json({ message: error.message });
     }
 }

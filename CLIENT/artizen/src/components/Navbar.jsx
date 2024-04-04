@@ -7,8 +7,6 @@ import { SignedIn, SignedOut, SignInButton, useClerk, UserButton } from "@clerk/
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const {user} = useClerk()
-  console.log(user);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);

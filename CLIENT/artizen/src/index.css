@@ -502,3 +502,17 @@
   background-color: #222222;
   border: 3px solid #f6c605;
 }
+
+.creators-title{
+  font-size: 10vw;
+}
+
+.user-grid{
+  display: grid;
+  grid-template-columns: repeat(6,1fr);
+}
+
+
+/* .users-div{
+  width: 10vw;
+} */
