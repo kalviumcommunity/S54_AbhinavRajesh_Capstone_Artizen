@@ -9,7 +9,7 @@ const Creators = () => {
     try {
       const response = await axios.get('http://localhost:4000/api/users');
       setUsers(response.data);
-      console.log(users)
+      // console.log(users)
 
     } catch (error) {
       if (axios.isCancel(error)) {
