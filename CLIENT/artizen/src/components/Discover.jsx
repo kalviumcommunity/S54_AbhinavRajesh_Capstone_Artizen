@@ -60,6 +60,13 @@ const ArtworkGrid = () => {
   //   };
   // }, []);
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
   
   
 
