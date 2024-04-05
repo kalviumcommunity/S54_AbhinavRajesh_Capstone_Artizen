@@ -513,6 +513,45 @@
 }
 
 
-/* .users-div{
-  width: 10vw;
-} */
+.testimonials-div{
+  color: white;
+}
+
+.testimonials-div{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  justify-items: center;
+  row-gap: 8vh;
+}
+.testimonial-grid-container{
+  background-color: #222222;
+  border-radius: 20px;
+  height: 50vh;
+  width: 28vw;
+  padding: 5%;
+}
+
+.test-title{
+  font-size: 2vw;
+  font-family: heverly;
+  letter-spacing: 2px;
+  margin-bottom: 5%;
+  border-bottom: 2px solid white;
+}
+
+.test-body{
+  font-family: Helvetica;
+  font-size: 1.5vw;
+  letter-spacing: 1px;
+}
+
+.testimonial-box-body{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 90%;
+}
+
+.testimonial-box-rating{
+  font-size: 3vw;
+}

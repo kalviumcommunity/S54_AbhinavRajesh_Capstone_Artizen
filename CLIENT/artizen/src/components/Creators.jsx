@@ -14,8 +14,8 @@ const Creators = () => {
     } catch (error) {
       if (axios.isCancel(error)) {
       } else {
-        console.error('Error fetching artworks:', error);
-        toast.error('Failed to fetch artworks. Please try again later.');
+        console.error('Error fetching users:', error);
+        toast.error('Failed to fetch users. Please try again later.');
       }
     }
   };

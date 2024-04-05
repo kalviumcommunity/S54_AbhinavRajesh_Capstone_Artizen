@@ -52,14 +52,6 @@ const ArtworkGrid = () => {
 
   }, []);
 
-  // useEffect(() => {
-
-  //   return () => {
-  //     const source = axios.CancelToken.source();
-  //     source.cancel('Request cancelled by cleanup');
-  //   };
-  // }, []);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevState => ({
