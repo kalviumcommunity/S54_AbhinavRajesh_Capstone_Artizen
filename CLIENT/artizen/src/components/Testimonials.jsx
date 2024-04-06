@@ -3,6 +3,8 @@ import { toast } from 'react-toastify';
 import Modal from 'react-modal';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
+import { useClerk } from '@clerk/clerk-react';
+import { useCookies } from 'react-cookie'; // Import useCookies hook
 Modal.setAppElement('#root');
 
 const Testimonials = () => {
@@ -13,55 +15,79 @@ const Testimonials = () => {
     title: '',
     testimonial: '',
     likes: 0,
+    author: '',
   });
 
+  const { user } = useClerk();
+  const [cookies] = useCookies(['__client_uat']); // Access the __client_uat cookie value
+
   useEffect(() => {
-    const fetchTestimonialData = async () => {
+    const fetchInitialData = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/testimonials');
-        setTestimonials(response.data);
+        // Fetch user data
+        const userData = await axios.get('http://localhost:4000/api/users');
+        setUsers(userData.data);
+
+        // Fetch testimonials data
+        const testimonialsData = await axios.get('http://localhost:4000/api/testimonials');
+        setTestimonials(testimonialsData.data);
       } catch (error) {
-        console.error(error);
-        toast.error('Failed to fetch Testimonials. Please try again later.');
+        console.error('Error fetching data:', error);
+        toast.error('Failed to fetch data. Please try again later.');
       }
     };
 
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get('http://localhost:4000/api/users');
-        setUsers(response.data);
-      } catch (error) {
-        console.error('Error fetching users:', error);
-        toast.error('Failed to fetch users. Please try again later.');
-      }
-    };
-
-    fetchUserData();
-    fetchTestimonialData();
-  }, []);
+    fetchInitialData();
+  }, []); // Empty dependency array ensures this useEffect runs only once on mount
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    let newValue = value;
+
+    // Ensure likes value doesn't exceed 10
+    if (name === 'likes') {
+      newValue = Math.min(parseInt(value), 10);
+    }
+
     setForm(prevState => ({
       ...prevState,
-      [name]: value
+      [name]: newValue
     }));
   };
 
   const handleTestimonialUpload = async () => {
     try {
-      await axios.post('http://localhost:4000/api/testimonials', form);
-      toast.success('Testimonial Submitted Successfully');
+      if (cookies['__client_uat'] === '0') {
+        toast.error('Please sign in to submit a testimonial.');
+        return;
+      }
+      const fullName = user.fullName;
+      const updatedForm = {
+        ...form,
+        author: fullName
+      };
+      await axios.post('http://localhost:4000/api/testimonials', updatedForm);
       setForm({
         title: '',
         testimonial: '',
         likes: 0,
+        author: '',
       });
       setModalOpen(false);
+  
+      toast.success('Testimonial Submitted Successfully');
     } catch (error) {
       console.error(error);
       toast.error('Failed to Submit Testimonial');
     }
+  };
+
+  const handleUploadButtonClick = () => {
+    if (cookies['__client_uat'] === 0) {
+      toast.error('Please sign in to submit a testimonial.');
+      return;
+    }
+    setModalOpen(true);
   };
 
   return (
@@ -73,12 +99,10 @@ const Testimonials = () => {
         <div className='testimonials-div'>
           {testimonials.map((testimonial, index) => (
             <div key={index} className='testimonial-grid-container'>
-              {/* {users.map((user, userIndex) => (
-                <div key={userIndex} className='testimonial-box-header'>
-                  <img src={user.pfp} alt=""  style={{width:'8vw',height:'15vh',borderRadius:'50%'}}/>
-                  <h4>{user.username}</h4>
-                </div> */}
-              {/* ))} */}
+              <div className='testimonial-header'>
+                {users.map(user => user.username === testimonial.author && <img src={user.pfp} style={{width:'3vw', borderRadius:'50%',height:'5.6vh'}} className="profile-picture" />)}
+                {testimonial.author}
+              </div>
               <div className='testimonial-box-body'>
                 <div className='test-title'>{testimonial.title}</div>
                 <div className='test-body'>{testimonial.testimonial}</div>
@@ -89,7 +113,7 @@ const Testimonials = () => {
             </div>
           ))}
         </div>
-        <button className='upload-button' onClick={() => setModalOpen(true)}>Submit</button>
+        <button className='upload-button' onClick={handleUploadButtonClick}>Submit</button>
       </div>
       <Modal
         isOpen={modalOpen}

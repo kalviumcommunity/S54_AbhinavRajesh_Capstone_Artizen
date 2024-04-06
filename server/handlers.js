@@ -104,6 +104,7 @@ exports.createTestimonial = async (req,res) => {
         title: req.body.title,
         testimonial: req.body.testimonial,
         likes: req.body.likes,
+        author: req.body.author,
     });
     try {
         const newTestimonial = await testimonials.save();
