@@ -46,7 +46,7 @@ const Testimonials = () => {
 
     // Ensure likes value doesn't exceed 10
     if (name === 'likes') {
-      newValue = Math.min(parseInt(value), 10);
+      newValue = Math.min(parseInt(value), 5);
     }
 
     setForm(prevState => ({
