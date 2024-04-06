@@ -47,6 +47,10 @@ const testimonialSchema = new mongoose.Schema({
     likes: {
         type: Number,
         required: true,
+    },
+    author: {
+        type: String,
+        required: true,
     }
 })
 
