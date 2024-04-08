@@ -10,7 +10,7 @@ Modal.setAppElement('#root');
 
 const ArtworkGrid = () => {
 
-  
+  const { user } = useClerk();
   const [artworks, setArtworks] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -21,35 +21,18 @@ const ArtworkGrid = () => {
     description: '',
   });
 
-  
-
-  const {user} = useClerk()
-  // console.log(user)
-  
-
   useEffect(() => {
-
-
     const fetchData = async () => {
-
-
       try {
         const response = await axios.get('https://artizen.onrender.com/api/data/artworks');
         setArtworks(response.data);
-        console.log(user)
-
       } catch (error) {
-        if (axios.isCancel(error)) {
-        } else {
-          console.error('Error fetching artworks:', error);
-          toast.error('Failed to fetch artworks. Please try again later.');
-        }
+        console.error('Error fetching artworks:', error);
+        toast.error('Failed to fetch artworks. Please try again later.');
       }
     };
 
-    fetchData()
-
-
+    fetchData();
   }, []);
 
   const handleInputChange = (e) => {
@@ -60,17 +43,6 @@ const ArtworkGrid = () => {
     }));
   };
   
-  
-
-  const handleUserUpload = async () => {
-    const { fullName, imageUrl } = user
-    try{
-      await axios.post('http://localhost:4000/api/signup', { "fullName":fullName, "imageUrl" : imageUrl });
-    }catch(err){
-      console.error(err)
-    }
-  }
-
   const handleUpload = async () => {
     try {
       await axios.post('https://artizen.onrender.com/api/artworks', formData);
@@ -87,6 +59,14 @@ const ArtworkGrid = () => {
       console.error('Error uploading artwork:', error);
       toast.error('Failed to upload artwork. Please try again later.');
     }
+  };
+
+  const handleUploadButtonClick = () => {
+    if (!user) {
+      toast.error('Please sign in to upload artwork.');
+      return;
+    }
+    setModalIsOpen(true);
   };
 
   return (
@@ -106,7 +86,7 @@ const ArtworkGrid = () => {
             </div>
           ))}
         </div>
-        <button className="upload-button" onClick={() => setModalIsOpen(true)}><img style={{width: '50px',paddingRight:'10px'}} src={uploadIcon} /> Upload</button>
+        <button className="upload-button" onClick={handleUploadButtonClick}><img style={{width: '50px',paddingRight:'10px'}} src={uploadIcon} /> Upload</button>
       </div>
       <Modal
         isOpen={modalIsOpen}
@@ -136,10 +116,7 @@ const ArtworkGrid = () => {
             <h3>Description :</h3>
             <textarea placeholder='description' name='description' className='description-input' type='text' value={formData.description} onChange={handleInputChange}></textarea>
           </div>
-          <button type="button" onClick={()=>{
-            handleUserUpload();
-            handleUpload();
-          }}>Upload</button>
+          <button type="button" onClick={handleUpload}>Upload</button>
         </form>
       </Modal>
     </>

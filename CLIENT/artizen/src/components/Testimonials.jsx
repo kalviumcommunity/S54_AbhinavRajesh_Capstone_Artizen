@@ -4,11 +4,12 @@ import Modal from 'react-modal';
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 import { useClerk } from '@clerk/clerk-react';
-import { useCookies } from 'react-cookie'; // Import useCookies hook
+import { useCookies } from 'react-cookie';
+import { Rating } from 'react-simple-star-rating';
 Modal.setAppElement('#root');
 
 const Testimonials = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState([]); // Added users state
   const [testimonials, setTestimonials] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [form, setForm] = useState({
@@ -19,16 +20,14 @@ const Testimonials = () => {
   });
 
   const { user } = useClerk();
-  const [cookies] = useCookies(['__client_uat']); // Access the __client_uat cookie value
+  const [cookies] = useCookies(['__client_uat']);
 
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        // Fetch user data
-        const userData = await axios.get('http://localhost:4000/api/users');
-        setUsers(userData.data);
+        const usersData = await axios.get('http://localhost:4000/api/users');
+        setUsers(usersData.data);
 
-        // Fetch testimonials data
         const testimonialsData = await axios.get('http://localhost:4000/api/testimonials');
         setTestimonials(testimonialsData.data);
       } catch (error) {
@@ -38,13 +37,12 @@ const Testimonials = () => {
     };
 
     fetchInitialData();
-  }, []); // Empty dependency array ensures this useEffect runs only once on mount
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     let newValue = value;
 
-    // Ensure likes value doesn't exceed 10
     if (name === 'likes') {
       newValue = Math.min(parseInt(value), 5);
     }
@@ -57,14 +55,20 @@ const Testimonials = () => {
 
   const handleTestimonialUpload = async () => {
     try {
-      if (cookies['__client_uat'] === '0') {
+      if (!user) {
         toast.error('Please sign in to submit a testimonial.');
         return;
       }
-      const fullName = user.fullName;
+      
+      const hasSubmitted = testimonials.some(testimonial => testimonial.author === user.fullName);
+      if (hasSubmitted) {
+        toast.error('You have already submitted a testimonial.');
+        return;
+      }
+
       const updatedForm = {
         ...form,
-        author: fullName
+        author: user.fullName
       };
       await axios.post('http://localhost:4000/api/testimonials', updatedForm);
       setForm({
@@ -83,7 +87,7 @@ const Testimonials = () => {
   };
 
   const handleUploadButtonClick = () => {
-    if (cookies['__client_uat'] === 0) {
+    if (!user) {
       toast.error('Please sign in to submit a testimonial.');
       return;
     }
@@ -100,7 +104,15 @@ const Testimonials = () => {
           {testimonials.map((testimonial, index) => (
             <div key={index} className='testimonial-grid-container'>
               <div className='testimonial-header'>
-                {users.map(user => user.username === testimonial.author && <img src={user.pfp} style={{width:'3vw', borderRadius:'50%',height:'5.6vh'}} className="profile-picture" />)}
+                {users.map(user => user.username === testimonial.author && (
+                  <img 
+                    key={user.username} 
+                    src={user.pfp} 
+                    alt="Profile" 
+                    style={{ width: '3vw', borderRadius: '50%', height: '5.6vh' }} 
+                    className="profile-picture" 
+                  />
+                ))}
                 {testimonial.author}
               </div>
               <div className='testimonial-box-body'>
@@ -108,7 +120,7 @@ const Testimonials = () => {
                 <div className='test-body'>{testimonial.testimonial}</div>
               </div>
               <div className='testimonial-box-rating'>
-                {testimonial.likes}
+                <Rating readonly={true} initialValue={testimonial.likes} size={20} />
               </div>
             </div>
           ))}
