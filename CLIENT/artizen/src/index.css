@@ -572,3 +572,14 @@
   letter-spacing: 3px;
   border-bottom: 1px solid white;
 }
+
+.profile-name{
+  color: white;
+  font-size: 7vw;
+  font-family: heverly;
+}
+
+.profile-pic{
+  width: 20vw;
+}
+

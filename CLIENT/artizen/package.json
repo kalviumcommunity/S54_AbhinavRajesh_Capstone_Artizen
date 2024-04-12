@@ -10,12 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/provider": "^2.4.2",
     "@chakra-ui/react": "^2.8.2",
     "@clerk/clerk-react": "^4.30.7",
     "@react-spring/parallax": "^9.7.3",
     "aos": "^2.3.4",
     "axios": "^1.6.8",
     "react": "^18.2.0",
+    "react-burger-menu": "^3.0.9",
     "react-cookie": "^7.1.4",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
