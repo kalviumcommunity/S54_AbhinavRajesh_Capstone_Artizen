@@ -43,6 +43,11 @@ exports.getArtworkById = async (req, res) => {
 };
 
 exports.updateArtwork = async (req, res) => {
+    const { title, description, category, author, image } = req.body;
+    if (!title || !description || !category || !author || !image) {
+        return res.status(400).json({ message: 'Missing required fields' });
+    }
+
     try {
         const updatedArtwork = await Art.findByIdAndUpdate(req.params.id, req.body);
         if (updatedArtwork == null) {
@@ -53,7 +58,6 @@ exports.updateArtwork = async (req, res) => {
         return res.status(500).json({ message: error.message });
     }
 };
-
 exports.deleteArtwork = async (req, res) => {
     try {
         const deletedArtwork = await Art.findByIdAndDelete(req.params.id);
@@ -116,6 +120,11 @@ exports.createTestimonial = async (req,res) => {
 
 
 exports.updateTestimonial = async (req, res) => {
+    const { title, testimonial, likes } = req.body;
+    if (!title || !testimonial || !likes) {
+        return res.status(400).json({ message: 'Missing required fields' });
+    }
+
     try {
         const updatedTestimonial = await Testimonial.findByIdAndUpdate(req.params.id, req.body);
         if (updatedTestimonial == null) {
@@ -126,6 +135,7 @@ exports.updateTestimonial = async (req, res) => {
         return res.status(500).json({ message: error.message });
     }
 };
+
 
 exports.deleteTestimonial = async (req,res) => {
     try {
