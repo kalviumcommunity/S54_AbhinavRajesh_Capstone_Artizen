@@ -24,7 +24,7 @@ const ArtworkGrid = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://artizen.onrender.com/api/data/artworks');
+        const response = await axios.get('http://localhost:4000/api/data/artworks');
         setArtworks(response.data);
       } catch (error) {
         console.error('Error fetching artworks:', error);
@@ -45,7 +45,7 @@ const ArtworkGrid = () => {
   
   const handleUpload = async () => {
     try {
-      await axios.post('https://artizen.onrender.com/api/artworks', formData);
+      await axios.post('http://localhost:4000/api/artworks', formData);
       toast.success('Artwork uploaded successfully.');      
       setFormData({
         title: '',
