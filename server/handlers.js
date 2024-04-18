@@ -113,3 +113,28 @@ exports.createTestimonial = async (req,res) => {
         res.status(500).json({ message: error.message });
     }
 }
+
+
+exports.updateTestimonial = async (req, res) => {
+    try {
+        const updatedTestimonial = await Testimonial.findByIdAndUpdate(req.params.id, req.body);
+        if (updatedTestimonial == null) {
+            return res.status(404).json({ message: 'Testimonial not found' });
+        }
+        res.status(200).json(updatedTestimonial);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+exports.deleteTestimonial = async (req,res) => {
+    try {
+        const deletedTestimonial = await Testimonial.findByIdAndDelete(req.params.id);
+        if (deletedTestimonial == null) {
+            return res.status(404).json({ message: 'Testimonial not found' });
+        }
+        res.json({ message: 'Testimonial deleted' });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
