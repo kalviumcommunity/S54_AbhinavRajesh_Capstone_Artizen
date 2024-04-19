@@ -1,10 +1,9 @@
-const {Art, Testimonial} = require('./Schema.js');
-const {User} = require('./Schema.js')
+const { Art, Testimonial, Forums } = require('./Schema.js');
+const { User } = require('./Schema.js');
 
 exports.getAllArtworks = async (req, res) => {
     try {
         const artworks = await Art.find();
-        //  console.log(artworks)
         res.json(artworks);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -27,8 +26,6 @@ exports.createArtwork = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-
-
 
 exports.getArtworkById = async (req, res) => {
     try {
@@ -58,6 +55,7 @@ exports.updateArtwork = async (req, res) => {
         return res.status(500).json({ message: error.message });
     }
 };
+
 exports.deleteArtwork = async (req, res) => {
     try {
         const deletedArtwork = await Art.findByIdAndDelete(req.params.id);
@@ -70,40 +68,40 @@ exports.deleteArtwork = async (req, res) => {
     }
 };
 
-exports.getAllUsers = async (req,res) => {
+exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.find();
         res.json(users);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-}
+};
 
-exports.addNewUser = async (req,res) => {
+exports.addNewUser = async (req, res) => {
     const users = new User({
         username: req.body.fullName,
         pfp: req.body.imageUrl
     });
-    console.log(users)
+    console.log(users);
     try {
         const newUser = await users.save();
         res.json(newUser);
     } catch (error) {
-        console.log(error)
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
-}
+};
 
-exports.getAllTestimonials = async (req,res) => {
+exports.getAllTestimonials = async (req, res) => {
     try {
         const testimonials = await Testimonial.find();
         res.json(testimonials);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-}
+};
 
-exports.createTestimonial = async (req,res) => {
+exports.createTestimonial = async (req, res) => {
     const testimonials = new Testimonial({
         title: req.body.title,
         testimonial: req.body.testimonial,
@@ -116,8 +114,7 @@ exports.createTestimonial = async (req,res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-}
-
+};
 
 exports.updateTestimonial = async (req, res) => {
     const { title, testimonial, likes } = req.body;
@@ -136,8 +133,7 @@ exports.updateTestimonial = async (req, res) => {
     }
 };
 
-
-exports.deleteTestimonial = async (req,res) => {
+exports.deleteTestimonial = async (req, res) => {
     try {
         const deletedTestimonial = await Testimonial.findByIdAndDelete(req.params.id);
         if (deletedTestimonial == null) {
@@ -147,4 +143,56 @@ exports.deleteTestimonial = async (req,res) => {
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
-}
+};
+
+exports.getAllForums = async (req, res) => {
+    try {
+        const forums = await Forums.find();
+        res.json(forums);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+exports.createForums = async (req, res) => {
+    const forum = new Forums({
+        title: req.body.title,
+        question: req.body.question,
+        author: req.body.author,
+        date: req.body.date,
+        likes: req.body.likes
+    });
+
+    try {
+        const newForum = await forum.save();
+        res.json(newForum);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+exports.getAllReplies = async (req, res) => {
+    try {
+        const replies = await Forums.find({}, { replies: 1 });
+        res.json(replies);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+exports.createReplies = async (req, res) => {
+    const { forumId } = req.params;
+    const { content, author, date } = req.body;
+    try {
+        const forum = await Forums.findById(forumId);
+        if (!forum) {
+            return res.status(404).json({ message: 'Forum not found' });
+        }
+        forum.replies.push({ content, author, date });
+        const updatedForum = await forum.save();
+        res.status(201).json(updatedForum.replies);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+

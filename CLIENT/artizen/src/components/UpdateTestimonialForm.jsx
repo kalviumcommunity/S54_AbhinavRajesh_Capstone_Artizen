@@ -22,7 +22,6 @@ const UpdateTestimonialForm = ({ testimonial, onClose }) => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        // Limit likes to a maximum of 5
         const likesValue = name === 'likes' ? Math.min(parseInt(value), 5) : value;
         setFormData({
             ...formData,

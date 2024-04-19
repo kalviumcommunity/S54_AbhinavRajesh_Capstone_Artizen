@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Modal from 'react-modal';
+import { useClerk } from '@clerk/clerk-react';
+import { useDropzone } from 'react-dropzone';
 import '../App.css';
 import 'react-toastify/dist/ReactToastify.css';
-import uploadIcon from '../assets/uploadicon.png'
-import { useClerk } from '@clerk/clerk-react';
+import uploadIcon from '../assets/uploadicon.png';
+import {addImageToCloudinary} from './cloudinary';
 Modal.setAppElement('#root');
 
 const ArtworkGrid = () => {
-
   const { user } = useClerk();
   const [artworks, setArtworks] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -20,6 +21,7 @@ const ArtworkGrid = () => {
     image: '',
     description: '',
   });
+  const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,16 +44,19 @@ const ArtworkGrid = () => {
       [name]: value
     }));
   };
-  
+
   const handleUpload = async () => {
     try {
+      const imageUrl = await addImageToCloudinary(formData.image);
+      formData.image = imageUrl[0];
       await axios.post('http://localhost:4000/api/artworks', formData);
-      toast.success('Artwork uploaded successfully.');      
+      toast.success('Artwork uploaded successfully.');
+      console.log(formData)
       setFormData({
         title: '',
         category: '',
         author: '',
-        image: '',
+        image: '', 
         description: '',
       });
       setModalIsOpen(false);
@@ -60,6 +65,7 @@ const ArtworkGrid = () => {
       toast.error('Failed to upload artwork. Please try again later.');
     }
   };
+  
 
   const handleUploadButtonClick = () => {
     if (!user) {
@@ -68,6 +74,16 @@ const ArtworkGrid = () => {
     }
     setModalIsOpen(true);
   };
+
+  const onDrop = (acceptedFiles) => {
+    setFormData(prevState => ({
+      ...prevState,
+      image: acceptedFiles[0]
+    }));
+    setImagePreview(URL.createObjectURL(acceptedFiles[0]));
+  };
+
+  const {getRootProps, getInputProps} = useDropzone({onDrop});
 
   return (
     <>
@@ -110,7 +126,11 @@ const ArtworkGrid = () => {
           </div>
           <div className="form-group">
             <h3>Image :</h3>
-            <input placeholder='image link' className='form-input' type="text" name="image" value={formData.image} onChange={handleInputChange} />
+            <div {...getRootProps()} className="dropzone" style={{ backgroundColor: 'white', border: '2px dashed #0087F7', borderRadius: '4px', padding: '20px', textAlign: 'center', cursor: 'pointer' }}>
+              <input {...getInputProps()} />
+              {imagePreview && <img src={imagePreview} alt="Preview" style={{ width: '150px', height: '50px', marginBottom: '10px' }} />}
+              { imagePreview ? null : <p>Drag 'n' drop some files here, or select files</p>}
+            </div>
           </div>
           <div className="form-group">
             <h3>Description :</h3>
