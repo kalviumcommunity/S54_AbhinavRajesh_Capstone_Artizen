@@ -39,7 +39,7 @@ const Navbar = () => {
       setWindowWidth(window.innerWidth);
       if (window.innerWidth >= 1200) {
         setShowMenu(false); 
-        setDefaultMenu(false); // Close hamburger menu on resize
+        setDefaultMenu(false); 
         document.body.classList.remove('no-scroll'); 
         document.querySelector('.blur-overlay').classList.remove('active'); 
       }
@@ -93,16 +93,12 @@ const Navbar = () => {
             <div className='line'></div>
           </MenuButton>
           <MenuList>
-            <MenuItem fontFamily='Helvetica' fontWeight='bold' fontSize='15px' height='5vh' background='black' color='white' border='none'><Link style={{textDecoration:'none',color:'white'}} to='/Profile'>Profile</Link></MenuItem>
-            <MenuItem fontFamily='Helvetica' fontWeight='bold' fontSize='15px' height='5vh' background='black' color='white' border='none'>Create a Copy</MenuItem>
-            <MenuItem fontFamily='Helvetica' fontWeight='bold' fontSize='15px' height='5vh' background='black' color='white' border='none'>Mark as Draft</MenuItem>
-            <MenuItem fontFamily='Helvetica' fontWeight='bold' fontSize='15px' height='5vh' background='black' color='white' border='none'>Delete</MenuItem>
-            <MenuItem fontFamily='Helvetica' fontWeight='bold' fontSize='15px' height='5vh' background='black' color='white' border='none'>Attend a Workshop</MenuItem>
+            <MenuItem fontFamily='Helvetica' fontWeight='bold' fontSize='15px' height='5vh' background='black' color='white' border='none'><Link style={{textDecoration:'none',color:'white'}} to='/profile'>Profile</Link></MenuItem>
+            <MenuItem fontFamily='Helvetica' fontWeight='bold' fontSize='15px' height='5vh' background='black' color='white' border='none'><Link style={{textDecoration:'none',color:'white'}} to='/forums'>Forums</Link></MenuItem>
           </MenuList>
         </Menu>
-
         </div>
-        {/* )} */}
+        
         <div className='space' style={{ display: 'flex', alignItems: 'center' }}>
           <SignedOut>
             <SignInButton>

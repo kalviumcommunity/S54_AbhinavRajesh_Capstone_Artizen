@@ -55,7 +55,52 @@ const testimonialSchema = new mongoose.Schema({
 })
 
 
+const replySchema = new mongoose.Schema({
+    content: {
+        type: String,
+        required: true,
+    },
+    author: {
+        type: String,
+        required: true,
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    }
+});
+
+const forumSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+        maxlength: 100
+    },
+    question: {
+        type: String,
+        required: true,
+    },
+    author: {
+        type: String,
+        required: true,
+    },
+    date: {
+        type: Date,
+        default: Date.now
+    },
+    likes: {
+        type: Number,
+        default: 0
+    },
+    replies: [replySchema]
+});
+
+forumSchema.index({ author: 1 });
+
+
 const Art = mongoose.model("artworks", artworkSchema);
 const User = mongoose.model("userdatas", userSchema);
 const Testimonial = mongoose.model("testimonialdatas", testimonialSchema);
-module.exports = {Art, User, Testimonial};
+const Forums = mongoose.model("forumsdatas", forumSchema);
+
+module.exports = {Art, User, Testimonial, Forums};

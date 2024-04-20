@@ -8,11 +8,10 @@ import Creators from './Creators'
 import Testimonials from './Testimonials'
 import { useClerk } from '@clerk/clerk-react'
 import Profile from './Profile'
-
+import Forums from './Forums'
 
 
 const AllRoutes = () => {
-
 
   return (
     <>
@@ -22,7 +21,8 @@ const AllRoutes = () => {
             <Route path='/discover' element={ <Discover />} />
             <Route path='/creators' element={<Creators />} />
             <Route path='/testimonials' element={<Testimonials />} />
-            <Route path='/Profile' element={<Profile />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/forums' element={<Forums />}/>
         </Routes>
     </>
   )

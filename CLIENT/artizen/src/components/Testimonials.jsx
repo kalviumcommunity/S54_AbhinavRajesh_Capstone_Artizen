@@ -9,7 +9,7 @@ import { Rating } from 'react-simple-star-rating';
 Modal.setAppElement('#root');
 
 const Testimonials = () => {
-  const [users, setUsers] = useState([]); // Added users state
+  const [users, setUsers] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [form, setForm] = useState({
