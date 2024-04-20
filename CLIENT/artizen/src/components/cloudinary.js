@@ -12,12 +12,11 @@ const addImageToCloudinary = async (image) => {
         formData,
         {
           headers: {
-            'Content-Type': 'multipart/form-data' // Ensure proper content type
+            'Content-Type': 'multipart/form-data'
           }
         }
       );
 
-      // Check if the response contains the secure_url property
       if (response.data && response.data.secure_url) {
         uploadedImages.push(response.data.secure_url);
       } else {

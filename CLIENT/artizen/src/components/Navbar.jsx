@@ -39,7 +39,7 @@ const Navbar = () => {
       setWindowWidth(window.innerWidth);
       if (window.innerWidth >= 1200) {
         setShowMenu(false); 
-        setDefaultMenu(false); // Close hamburger menu on resize
+        setDefaultMenu(false); 
         document.body.classList.remove('no-scroll'); 
         document.querySelector('.blur-overlay').classList.remove('active'); 
       }

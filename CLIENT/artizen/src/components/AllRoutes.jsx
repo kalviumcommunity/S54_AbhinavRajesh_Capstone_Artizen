@@ -11,9 +11,7 @@ import Profile from './Profile'
 import Forums from './Forums'
 
 
-
 const AllRoutes = () => {
-
 
   return (
     <>

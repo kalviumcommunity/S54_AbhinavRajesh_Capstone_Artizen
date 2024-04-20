@@ -18,4 +18,5 @@ router.get('/forums', handlers.getAllForums);
 router.post('/forums', handlers.createForums);
 router.get('/forums/replies/:id', handlers.getAllReplies);
 router.post('/forums/replies/:forumId', handlers.createReplies);
+
 module.exports = router;
