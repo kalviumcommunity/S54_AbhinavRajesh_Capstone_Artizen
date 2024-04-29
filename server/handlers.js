@@ -3,7 +3,13 @@ const { User } = require('./Schema.js');
 
 exports.getAllArtworks = async (req, res) => {
     try {
-        const artworks = await Art.find();
+        const { category } = req.query;
+        let artworks;
+        if (category) {
+            artworks = await Art.find({ category });
+        } else {
+            artworks = await Art.find();
+        }
         res.json(artworks);
     } catch (error) {
         res.status(500).json({ message: error.message });

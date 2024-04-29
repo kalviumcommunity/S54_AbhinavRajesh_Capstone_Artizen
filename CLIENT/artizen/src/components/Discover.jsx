@@ -8,7 +8,7 @@ import '../App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import uploadIcon from '../assets/uploadicon.png';
 import { addImageToCloudinary } from './cloudinary';
-import { toast } from 'react-toastify'; // Add this import if not already imported
+import { toast } from 'react-toastify';
 import { useLocation, useParams } from 'react-router-dom';
 
 Modal.setAppElement('#root');
@@ -28,6 +28,7 @@ const ArtworkGrid = () => {
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
+  // console.log(searchParams);
   const selectedCategory = searchParams.get('category');
 
   const [imagePreview, setImagePreview] = useState(null);
@@ -35,19 +36,19 @@ const ArtworkGrid = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:4000/api/data/artworks');
-        console.log('Artworks data:', response.data);
-        console.log(selectedCategory);
-        const filteredArtworks = selectedCategory
-          ? response.data.filter(artwork => artwork.category === selectedCategory)
-          : response.data;
-        setArtworks(filteredArtworks);
-      } catch (error) {
+    try {
+      if ( selectedCategory){
+        const response = await axios.get(`http://localhost:4000/api/data/artworks?category=${selectedCategory}`);
+        setArtworks(response.data);
+      } else {
+        const response = await axios.get(`http://localhost:4000/api/data/artworks`);
+        setArtworks(response.data);
+      }
+    } catch (error) {
         console.error('Error fetching artworks:', error);
         toast.error('Failed to fetch artworks. Please try again later.');
-      }
-    };
+    }
+};
 
     fetchData();
 
