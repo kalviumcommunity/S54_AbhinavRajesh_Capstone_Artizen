@@ -17,6 +17,7 @@
     "mongodb": "^6.5.0",
     "mongoose": "^8.2.2",
     "node-fetch": "^3.3.2",
+    "socket.io": "^4.7.5",
     "svix": "^1.21.0"
   },
   "devDependencies": {

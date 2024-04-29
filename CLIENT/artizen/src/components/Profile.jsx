@@ -170,8 +170,6 @@ const Profile = () => {
                         <div className='testimonial-box-rating'>
                             <Rating readonly={true} initialValue={testimonial.likes} size={20} />
                         </div>
-
-                
                                 <div 
                                     className='testimonial-buttons'
                                     style={{ 
@@ -180,7 +178,7 @@ const Profile = () => {
                                         top: 0, 
                                         width: '100%', 
                                         height: '100%', 
-                                        display:'flex',
+                                        // display:'flex',
                                         justifyContent:'space-between',
                                         background: 'rgba(0, 0, 0, 0.5)',
                                         transition: 'opacity 0.3s',

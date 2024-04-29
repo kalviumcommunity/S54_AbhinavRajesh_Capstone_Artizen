@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import logo from '../assets/logo.png';
 import '../index.css';
 import { Link } from 'react-router-dom';
+import { motion } from "framer-motion";
 import { SignedIn, SignedOut, SignInButton, useClerk, UserButton } from "@clerk/clerk-react";
 import {
   Menu,
@@ -66,14 +67,14 @@ const Navbar = () => {
 
       {(showMenu || windowWidth >= 1200) && (
         <div className='nav-icons' style={{ display: windowWidth >= 1200 || showMenu ? 'flex' : 'none' }}>
-          <Link to='/discover' style={{ display: 'flex', alignItems: 'center' }}>
-            <button>Discover</button>
+          <Link to='/discovercat' style={{ display: 'flex', alignItems: 'center' }}>
+            <motion.button whileHover={{scale:1.1}}>Discover</motion.button>
           </Link>
           <Link to='/creators' style={{ display: 'flex', alignItems: 'center' }}>
-            <button>Creators</button>
+          <motion.button whileHover={{scale:1.1}}>Creators</motion.button>
           </Link>
           <Link to='/testimonials' style={{ display: 'flex', alignItems: 'center' }}>
-            <button>Testimonials</button>
+          <motion.button whileHover={{scale:1.1}}>Testimonials</motion.button>
           </Link>
         </div>
       )}
@@ -95,6 +96,7 @@ const Navbar = () => {
           <MenuList>
             <MenuItem fontFamily='Helvetica' fontWeight='bold' fontSize='15px' height='5vh' background='black' color='white' border='none'><Link style={{textDecoration:'none',color:'white'}} to='/profile'>Profile</Link></MenuItem>
             <MenuItem fontFamily='Helvetica' fontWeight='bold' fontSize='15px' height='5vh' background='black' color='white' border='none'><Link style={{textDecoration:'none',color:'white'}} to='/forums'>Forums</Link></MenuItem>
+            <MenuItem fontFamily='Helvetica' fontWeight='bold' fontSize='15px' height='5vh' background='black' color='white' border='none'><Link style={{textDecoration:'none',color:'white'}} to='/discover'>Discover</Link></MenuItem>
           </MenuList>
         </Menu>
         </div>
