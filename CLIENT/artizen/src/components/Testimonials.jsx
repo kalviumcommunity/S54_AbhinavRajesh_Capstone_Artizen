@@ -25,10 +25,10 @@ const Testimonials = () => {
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const usersData = await axios.get('http://localhost:4000/api/users');
+        const usersData = await axios.get('https://artizen.onrender.com/api/users');
         setUsers(usersData.data);
 
-        const testimonialsData = await axios.get('http://localhost:4000/api/testimonials');
+        const testimonialsData = await axios.get('https://artizen.onrender.com/api/testimonials');
         setTestimonials(testimonialsData.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -70,7 +70,7 @@ const Testimonials = () => {
         ...form,
         author: user.fullName
       };
-      await axios.post('http://localhost:4000/api/testimonials', updatedForm);
+      await axios.post('https://artizen.onrender.com/api/testimonials', updatedForm);
       setForm({
         title: '',
         testimonial: '',

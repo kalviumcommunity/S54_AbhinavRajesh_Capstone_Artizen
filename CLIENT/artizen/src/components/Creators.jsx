@@ -7,7 +7,7 @@ const Creators = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/api/users');
+      const response = await axios.get('https://artizen.onrender.com/api/users');
       setUsers(response.data);
 
     } catch (error) {

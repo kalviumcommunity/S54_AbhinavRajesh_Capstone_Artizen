@@ -12,6 +12,17 @@ const Home = () => {
   const parallaxRef = useRef();
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        
+        
+      } catch (error) {
+          console.error('Error fetching artworks:', error);
+          toast.error('Failed to fetch artworks. Please try again later.');
+      }
+  };
+  
+      fetchData();
     parallaxRef.current.scrollTo(0);
   }, []);
 
