@@ -14,10 +14,10 @@ const Forums = () => {
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const usersData = await axios.get('http://localhost:4000/api/users');
+        const usersData = await axios.get('https://artizen.onrender.com/api/users');
         setUsers(usersData.data);
 
-        const forumsData = await axios.get('http://localhost:4000/api/forums');
+        const forumsData = await axios.get('https://artizen.onrender.com/api/forums');
         setForum(forumsData.data);
       } catch (error) {
         console.error('Error fetching data:', error);

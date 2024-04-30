@@ -38,10 +38,10 @@ const ArtworkGrid = () => {
     const fetchData = async () => {
     try {
       if ( selectedCategory){
-        const response = await axios.get(`http://localhost:4000/api/data/artworks?category=${selectedCategory}`);
+        const response = await axios.get(`https://artizen.onrender.com/api/data/artworks?category=${selectedCategory}`);
         setArtworks(response.data);
       } else {
-        const response = await axios.get(`http://localhost:4000/api/data/artworks`);
+        const response = await axios.get(`https://artizen.onrender.com/api/data/artworks`);
         setArtworks(response.data);
       }
     } catch (error) {
@@ -86,7 +86,7 @@ const ArtworkGrid = () => {
     try {
       const imageUrl = await addImageToCloudinary(formData.image);
       formData.image = imageUrl[0];
-      await axios.post('http://localhost:4000/api/artworks', formData);
+      await axios.post('https://artizen.onrender.com/api/artworks', formData);
       console.log(formData);
       setFormData({
         title: '',
