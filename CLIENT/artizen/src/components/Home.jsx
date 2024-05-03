@@ -3,36 +3,39 @@ import pic from '../assets/1.png';
 import man from '../assets/pic1.png'
 import '../index.css'
 import { Parallax, ParallaxLayer } from '@react-spring/parallax';
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import axios from 'axios';
+import { Rating } from 'react-simple-star-rating';
 
 const Home = () => {
-  const [animationComplete, setAnimationComplete] = useState(false);
+  const [animationCompleted, setAnimationCompleted] = useState(false);
+  const [testimonials, setTestimonials] = useState([]);
+  const [users, setUsers] = useState([]);
   const parallaxRef = useRef();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        
-        
+        const responseTestimonials = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/testimonials`);
+        const responseUsers = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users`);
+        setTestimonials(responseTestimonials.data);
+        setUsers(responseUsers.data);
       } catch (error) {
-          console.error('Error fetching artworks:', error);
-          toast.error('Failed to fetch artworks. Please try again later.');
+        console.error('Error fetching data:', error);
       }
-  };
-  
-      fetchData();
+    };
+    fetchData();
     parallaxRef.current.scrollTo(0);
   }, []);
 
   const handleAnimationEnd = () => {
-    setAnimationComplete(true);
+    setAnimationCompleted(true);
   };
 
   return (
     <div>
-      
       <div>
         <Parallax pages={2.85} ref={parallaxRef} className='main'>
           <ParallaxLayer offset={0} speed={1}>
@@ -40,7 +43,7 @@ const Home = () => {
             <h1>ARTIZEN</h1>
           </ParallaxLayer>
           <ParallaxLayer offset={0.08} speed={2}>
-            <img src={pic} alt="" className={animationComplete ? "fade-in final-state" : "fade-in"} onAnimationEnd={handleAnimationEnd} />
+            <img src={pic} alt="" className={animationCompleted ? "fade-in final-state" : "fade-in"} onAnimationEnd={handleAnimationEnd} />
           </ParallaxLayer>
           <ParallaxLayer offset={0.99} speed={1}>
             <div className="discover-section" style={{ color: 'white' }}>
@@ -57,7 +60,7 @@ const Home = () => {
                 </p>
               </div>
             </div>
-          </ParallaxLayer>
+            </ParallaxLayer>
           <ParallaxLayer offset={1.2} speed={1}>
             <div className="featured-section" style={{ color: 'white' }}>
               <div className='featured-section-text'>
@@ -70,79 +73,38 @@ const Home = () => {
                   <div className='frame'><img src="https://i.pinimg.com/originals/db/9b/a1/db9ba1d9f4adfcf0626fc97a3a97193c.jpg" alt="" style={{height:'100%',width:'100%'}} /></div>
               </div>
             </div>
-          </ParallaxLayer>
+            </ParallaxLayer>
           <ParallaxLayer offset={1.999} speed={1}>
             <div className="testimonial-section" style={{ color: 'white' }}>
               <div className='testimonial-section-text'>
                 <h2 className='sub-heading'>TESTIMONIALS</h2>
                 <h5>From Users</h5>
-                <Carousel>
-                  <div className='carousel-div'>
-                      <div className='carousel-header'>
-                        <h3>Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus</h3>
+                <Carousel className='carousel-div' showStatus={false} showArrows={false} interval={3000} infiniteLoop autoPlay>
+                  {testimonials.map((testimonial, index) => (
+                    <div  className='home-testimonial-container'>
+                    <div key={index}>
+                      <div className='home-testimonial-container-header'>
+                      {users.map(user => user.username === testimonial.author && (
+                        <img
+                          key={user.username}
+                          src={user.pfp}
+                          alt="Profile"
+                          style={{ width: '3vw', borderRadius: '50%', height: '5.6vh' }}
+                          className="profile-picture"
+                        />
+                      ))}
+                      {testimonial.author}
                       </div>
-                      <div className='carousel-body'>
-                      Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus ultrices sem vel. 
-                  Id sem sollicitudin mi tristique duis parturient consequat aenean ut. 
-                  Scelerisque id donec potenti dui aliquet. Enim ac habitant vivamus mattis egestas nisi sagittis. 
-                  Id dui venenatis sed
+                      <div className='home-testimonial-container-body'>
+                        <div className='home-testimonial-title'>{testimonial.title}</div>
+                        <div className='home-testimonial-content'>{testimonial.testimonial}</div>
                       </div>
-                  </div>
-                  <div className='carousel-div'>
-                  <div className='carousel-header'>
-                        <h3>Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus</h3>
+                      <div className='testimonial-box-rating'>
+                        <Rating readonly initialValue={testimonial.likes} size={20} />
                       </div>
-                      <div className='carousel-body'>
-                      Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus ultrices sem vel. 
-                  Id sem sollicitudin mi tristique duis parturient consequat aenean ut. 
-                  Scelerisque id donec potenti dui aliquet. Enim ac habitant vivamus mattis egestas nisi sagittis. 
-                  Id dui venenatis sed
-                      </div>
-                  </div>
-                  <div className='carousel-div'>
-                  <div className='carousel-header'>
-                        <h3>Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus</h3>
-                      </div>
-                      <div className='carousel-body'>
-                      Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus ultrices sem vel. 
-                  Id sem sollicitudin mi tristique duis parturient consequat aenean ut. 
-                  Scelerisque id donec potenti dui aliquet. Enim ac habitant vivamus mattis egestas nisi sagittis. 
-                  Id dui venenatis sed
-                      </div>
-                  </div>
-                  <div className='carousel-div'>
-                  <div className='carousel-header'>
-                        <h3>Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus</h3>
-                      </div>
-                      <div className='carousel-body'>
-                      Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus ultrices sem vel. 
-                  Id sem sollicitudin mi tristique duis parturient consequat aenean ut. 
-                  Scelerisque id donec potenti dui aliquet. Enim ac habitant vivamus mattis egestas nisi sagittis. 
-                  Id dui venenatis sed
-                      </div>
-                  </div>
-                  <div className='carousel-div'>
-                  <div className='carousel-header'>
-                        <h3>Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus</h3>
-                      </div>
-                      <div className='carousel-body'>
-                      Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus ultrices sem vel. 
-                  Id sem sollicitudin mi tristique duis parturient consequat aenean ut. 
-                  Scelerisque id donec potenti dui aliquet. Enim ac habitant vivamus mattis egestas nisi sagittis. 
-                  Id dui venenatis sed
-                      </div>
-                  </div>
-                  <div className='carousel-div'>
-                  <div className='carousel-header'>
-                        <h3>Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus</h3>
-                      </div>
-                      <div className='carousel-body'>
-                      Lorem ipsum dolor sit amet consectetur. Commodo morbi egestas lectus ultrices sem vel. 
-                  Id sem sollicitudin mi tristique duis parturient consequat aenean ut. 
-                  Scelerisque id donec potenti dui aliquet. Enim ac habitant vivamus mattis egestas nisi sagittis. 
-                  Id dui venenatis sed
-                      </div>
-                  </div>
+                    </div>
+                    </div>
+                  ))}
                 </Carousel>
               </div>
             </div>

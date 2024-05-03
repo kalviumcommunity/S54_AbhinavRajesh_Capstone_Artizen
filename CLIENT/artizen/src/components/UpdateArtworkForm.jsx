@@ -36,7 +36,7 @@ const UpdateArtworkForm = ({ artwork, onClose }) => {
 
     const handleUpdate = async () => {
         try {
-            await axios.put(`https://artizen.onrender.com/api/artworks/${id}`, formData);
+            await axios.put(`${import.meta.env.VITE_SERVER_URL}/api/artworks/${id}`, formData);
             toast.success('Artwork updated successfully');
             onClose(); 
         } catch (error) {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from "framer-motion";
 
 const DiscoverCategories = () => {
   const [selectedCategory, setSelectedCategory] = useState('hsdcvashdjvcjhewdvch');
@@ -30,7 +31,7 @@ const DiscoverCategories = () => {
           <div key={card.id} className={`discover-popular-card discover-popular-card-${card.id}`}>
             <h4 className='discover-popular-card-title'>{card.title}</h4>
             <div className='discover-popular-card-overlay'>
-              <Link to={`/discover?category=${card.title}`} className='discover-popular-card-button'>Search</Link>
+              <Link to={`/discover?category=${card.title}`}><motion.button whileHover={{scale:1.1}} className='discover-popular-card-button'>Search</motion.button></Link>
             </div>
           </div>
         ))}
@@ -51,7 +52,7 @@ const DiscoverCategories = () => {
       </div>
       <div>
         <Link to={`/discover`}>
-          <button className='discover-explore-btn'>Explore</button>
+          <motion.button whileHover={{scale:1.1}} className='discover-explore-btn'>Explore</motion.button>
         </Link>
       </div>
     </div>

@@ -6,7 +6,7 @@ import viewsIcon from '../assets/views.png';
 import { useClerk } from '@clerk/clerk-react';
 
 const Forums = () => {
-  const [users, setUsers] = useState([]); // Fix: Ensure proper initialization
+  const [users, setUsers] = useState([]);
   const [forum, setForum] = useState([]);
   const { user } = useClerk();
   console.log(user);
@@ -14,10 +14,10 @@ const Forums = () => {
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
-        const usersData = await axios.get('https://artizen.onrender.com/api/users');
+        const usersData = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users`);
         setUsers(usersData.data);
 
-        const forumsData = await axios.get('https://artizen.onrender.com/api/forums');
+        const forumsData = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/forums`);
         setForum(forumsData.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -42,7 +42,7 @@ const Forums = () => {
 
   return (
     <>
-      <h1 className='forums-title'>FORUMS</h1>
+      <h1 className='forums-title' style={{fontSize:'5vw'}}>Forums</h1>
       <div className='forums-body'>
         {forum.map((forums, index) => (
           <div key={index} className='forums-grid-container'>

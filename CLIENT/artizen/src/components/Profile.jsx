@@ -26,8 +26,8 @@ const Profile = () => {
         const fetchData = async () => {
             try {
                 const [artworksResponse, testimonialsResponse] = await Promise.all([
-                    axios.get('https://artizen.onrender.com/api/data/artworks'),
-                    axios.get('https://artizen.onrender.com/api/testimonials')
+                    axios.get(`${import.meta.env.VITE_SERVER_URL}/api/data/artworks`),
+                    axios.get(`${import.meta.env.VITE_SERVER_URL}/api/testimonials`)
                 ]);
                 
                 setArtworks(artworksResponse.data);
@@ -58,7 +58,7 @@ const Profile = () => {
         }
     
         try {
-            await axios.delete(`https://artizen.onrender.com/api/${type}/${id}`);
+            await axios.delete(`${import.meta.env.VITE_SERVER_URL}/api/${type}/${id}`);
             if (type === 'artworks') {
                 setArtworks(artworks.filter(artwork => artwork.id !== id));
             } else if (type === 'testimonials') {
