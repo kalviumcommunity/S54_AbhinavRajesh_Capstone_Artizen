@@ -84,7 +84,6 @@ exports.getAllUsers = async (req, res) => {
 };
 
 exports.addNewUser = async (req, res) => {
-    console.log(req.body)
     const users = new User({
         username: req.body.username,
         pfp: req.body.pfp   
