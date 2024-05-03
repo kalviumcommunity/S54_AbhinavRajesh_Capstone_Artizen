@@ -10,6 +10,7 @@ import uploadIcon from '../assets/uploadicon.png';
 import { addImageToCloudinary } from './cloudinary';
 import { toast } from 'react-toastify';
 import { useLocation, useParams } from 'react-router-dom';
+import Masonry from "react-responsive-masonry"
 
 Modal.setAppElement('#root');
 
@@ -18,6 +19,10 @@ const ArtworkGrid = () => {
   const [artworks, setArtworks] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const containerRef = useRef(null);
+  const [userData, setUserData] = useState({
+    username: '',
+    pfp: '',
+  })
   const [formData, setFormData] = useState({
     title: '',
     category: '',
@@ -25,10 +30,15 @@ const ArtworkGrid = () => {
     description: '',
     author: '',
   });
-
+  const categories = [
+    { title: 'Painting', id: 1 },
+    { title: 'Drawing', id: 2 },
+    { title: 'Sculpture', id: 3 },
+    { title: 'Digital Art', id: 4 },
+    { title: 'Photography', id: 5 }
+  ];
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  // console.log(searchParams);
   const selectedCategory = searchParams.get('category');
 
   const [imagePreview, setImagePreview] = useState(null);
@@ -38,10 +48,10 @@ const ArtworkGrid = () => {
     const fetchData = async () => {
     try {
       if ( selectedCategory){
-        const response = await axios.get(`https://artizen.onrender.com/api/data/artworks?category=${selectedCategory}`);
+        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/data/artworks?category=${selectedCategory}`);
         setArtworks(response.data);
       } else {
-        const response = await axios.get(`https://artizen.onrender.com/api/data/artworks`);
+        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/data/artworks`);
         setArtworks(response.data);
       }
     } catch (error) {
@@ -82,12 +92,21 @@ const ArtworkGrid = () => {
     }));
   };
 
+  const handleSelectCategory = () => {
+    selectedCategory = card.title
+  }
+
   const handleUpload = async () => {
     try {
       const imageUrl = await addImageToCloudinary(formData.image);
       formData.image = imageUrl[0];
-      await axios.post('https://artizen.onrender.com/api/artworks', formData);
+      await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/artworks`, formData)
+      await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/signup`, userData)
       console.log(formData);
+      setUserData({
+        username: user.fullName,
+        pfp: user.imageUrl
+      })
       setFormData({
         title: '',
         category: '',
@@ -95,6 +114,7 @@ const ArtworkGrid = () => {
         image: '',
         description: '',
       });
+      toast.success('Artwork Submitted Successfully')
       setModalIsOpen(false);
     } catch (error) {
       console.error('Error uploading artwork:', error);
@@ -119,50 +139,31 @@ const ArtworkGrid = () => {
   };
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
-  const renderArtworkGrid = () => {
-    const columnCount = 3;
-    const columnWidth = (containerWidth - (columnCount - 1) * 20) / columnCount;
-    const columnSpacing = 20;
-
-    let columns = Array.from({ length: columnCount }, () => []);
-
-    artworks.forEach((artwork, index) => {
-      const aspectRatio = artwork.width / artwork.height;
-      const height = columnWidth / aspectRatio;
-
-      const columnIndex = index % columnCount;
-      columns[columnIndex].push({
-        key: index,
-        height,
-        artwork,
-      });
-    });
-
-    const columnHeights = columns.map(column => column.reduce((acc, item) => acc + item.height, 0));
-    const maxHeight = Math.max(...columnHeights);
-
-    return (
-      <div style={{ position: 'relative', height: maxHeight }}>
-        {columns.map((column, columnIndex) => (
-          <div key={columnIndex} style={{ position: 'absolute', left: columnIndex * (columnWidth + columnSpacing), top: 0 }}>
-            {column.map(({ key, height, artwork }) => (
-              <div key={key} className="artwork" style={{ width: columnWidth, height, marginBottom: columnIndex < columnCount - 1 ? columnSpacing : 0 }}>
-                <img src={artwork.image} alt={artwork.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
-    );
-  };
 
   return (
     <>
       <div className="container" ref={containerRef} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <h1 className="discover-hero-text">Discover</h1>
-        <div className="artworks" style={{ width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
-          {renderArtworkGrid()}
+        <h1 className="discover-hero-text" style={{fontSize:'5vw',marginBottom:'4vh'}}>Discover</h1>
+        <div>
+          <input placeholder='Search' style={{marginBottom:'5vh',width:'40vw',borderRadius:'50px',height:'5vh',paddingLeft:'1.3vw',fontSize:'1.5vw',border:'none'}} type="text" name="" id="" />
         </div>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:'30px',marginBottom:'10vh'}}>
+          {categories.map (card => (
+            <div style={{color:'white',background:'#222222',width:'10vw',height:'6vh',borderRadius:'50px',display:'flex',justifyContent:'center',alignItems:'center',fontSize:'1.2vw',cursor:'pointer'}} onClick={handleSelectCategory}>
+              {card.title}
+            </div>
+          ))}
+        </div>
+          <Masonry columnsCount={3} gutter="20px">
+                {artworks.map((image, i) => (
+                    <img
+                        key={i}
+                        src={image.image}
+                        style={{width: "100%", display: "block", borderRadius:'20px'}}
+                    />
+                ))}
+            </Masonry>
+        {/* </div> */}
         {user && (
           <motion.button whileHover={{ scale: 1.1 }} className="upload-button" onClick={handleUploadButtonClick}>
             <img style={{ width: '50px', paddingRight: '10px' }} src={uploadIcon} alt="Upload" /> Upload
@@ -197,10 +198,6 @@ const ArtworkGrid = () => {
                 <option value="Digital Art">Digital Art</option>
                 <option value="Photography">Photography</option>
               </select>
-            </div>
-            <div className="form-author">
-              <h3>Author :</h3>
-              <p>{formData.author}</p>
             </div>
             <div className="form-group">
               <h3>Image :</h3>

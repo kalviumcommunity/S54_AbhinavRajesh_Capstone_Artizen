@@ -31,7 +31,7 @@ const UpdateTestimonialForm = ({ testimonial, onClose }) => {
 
     const handleUpdate = async () => {
         try {
-            await axios.put(`https://artizen.onrender.com/api/testimonials/${id}`, formData);
+            await axios.put(`${import.meta.env.VITE_SERVER_URL}/api/testimonials/${id}`, formData);
             toast.success('Testimonial updated successfully');
             onClose(); 
         } catch (error) {

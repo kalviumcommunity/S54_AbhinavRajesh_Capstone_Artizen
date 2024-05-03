@@ -937,3 +937,51 @@
   font-size: 22px;
   cursor: pointer;
 }
+
+.thumbs{
+  display: none;
+}
+
+.carousel-div{
+  margin-top: 5vh;
+  padding: 0 0;
+}
+
+.home-testimonial-container{
+  
+  height: 70vh;
+  background-color: #222222;
+  border-radius: 50px;
+}
+
+.home-testimonial-container-header{
+  display: flex;
+  padding: 3vh 3vw;
+  font-size: 2.5vw;
+  justify-content: space-between;
+  border-bottom: 1px solid white;
+}
+
+.home-testimonial-container-body{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 50vh;
+}
+
+.home-testimonial-title{
+  display: flex;
+  border-bottom: 1px solid white;
+  height: 10vh;
+  font-size: 2.5vw;
+  width: 100%;
+  padding: 2.5vh 4vw;
+}
+
+.home-testimonial-content{
+  display: flex;
+  font-size: 1.5vw;
+  width: 100%;
+  padding: 2.5vh 4vw;
+}
+
