@@ -14,8 +14,11 @@ import Masonry from "react-responsive-masonry"
 
 Modal.setAppElement('#root');
 
-const ArtworkGrid = () => {
+const ArtworkGrid = ({ selectedCategory }) => {
+  
   const { user } = useClerk();
+  console.log(user);
+  const [users, setUser] = useState([]);
   const [artworks, setArtworks] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const containerRef = useRef(null);
@@ -37,28 +40,28 @@ const ArtworkGrid = () => {
     { title: 'Digital Art', id: 4 },
     { title: 'Photography', id: 5 }
   ];
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const selectedCategory = searchParams.get('category');
 
   const [imagePreview, setImagePreview] = useState(null);
   const [containerWidth, setContainerWidth] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
-    try {
-      if ( selectedCategory){
-        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/data/artworks?category=${selectedCategory}`);
-        setArtworks(response.data);
-      } else {
-        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/data/artworks`);
-        setArtworks(response.data);
-      }
-    } catch (error) {
+      try {
+        const responseUser = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/users`);
+        setUser(responseUser.data);
+        console.log(responseUser.data)
+        if (selectedCategory){
+          const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/data/artworks?category=${selectedCategory}`);
+          setArtworks(response.data);
+        } else {
+          const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/data/artworks`);
+          setArtworks(response.data);
+        }
+      } catch (error) {
         console.error('Error fetching artworks:', error);
         toast.error('Failed to fetch artworks. Please try again later.');
-    }
-};
+      }
+    };
 
     fetchData();
 
@@ -72,7 +75,7 @@ const ArtworkGrid = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [selectedCategory]);
+  }, [selectedCategory, setUser]);
 
   useEffect(() => {
     if (user) {
@@ -83,6 +86,14 @@ const ArtworkGrid = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    if (user) {
+      setUserData({
+        username: user.fullName,
+        pfp: user.imageUrl
+      });
+    }
+  }, [user]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -92,21 +103,28 @@ const ArtworkGrid = () => {
     }));
   };
 
-  const handleSelectCategory = () => {
-    selectedCategory = card.title
-  }
-
   const handleUpload = async () => {
     try {
+      // Check if user's fullName exists in the users array
+      const usernames = users.map(u => u.username);
+      const isUserExist = usernames.includes(user.fullName);
+
+      console.log(isUserExist)
+
+      // If user doesn't exist in the users array, post user data to the database
+      if (!isUserExist) {
+        await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/signup`, {
+          username: user.fullName,
+          pfp: user.imageUrl
+        });
+      }
+
+      // Upload artwork
       const imageUrl = await addImageToCloudinary(formData.image);
       formData.image = imageUrl[0];
-      await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/artworks`, formData)
-      await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/signup`, userData)
-      console.log(formData);
-      setUserData({
-        username: user.fullName,
-        pfp: user.imageUrl
-      })
+      await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/artworks`, formData);
+
+      // Reset form data
       setFormData({
         title: '',
         category: '',
@@ -114,7 +132,9 @@ const ArtworkGrid = () => {
         image: '',
         description: '',
       });
-      toast.success('Artwork Submitted Successfully')
+
+      // Close modal and show success message
+      toast.success('Artwork Submitted Successfully');
       setModalIsOpen(false);
     } catch (error) {
       console.error('Error uploading artwork:', error);
@@ -127,6 +147,7 @@ const ArtworkGrid = () => {
       toast.error('Please sign in to upload artwork.');
       return;
     }
+    console.log(users)
     setModalIsOpen(true);
   };
 
@@ -149,7 +170,7 @@ const ArtworkGrid = () => {
         </div>
         <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:'30px',marginBottom:'10vh'}}>
           {categories.map (card => (
-            <div style={{color:'white',background:'#222222',width:'10vw',height:'6vh',borderRadius:'50px',display:'flex',justifyContent:'center',alignItems:'center',fontSize:'1.2vw',cursor:'pointer'}} onClick={handleSelectCategory}>
+            <div style={{color:'white',background:'#222222',width:'10vw',height:'6vh',borderRadius:'50px',display:'flex',justifyContent:'center',alignItems:'center',fontSize:'1.2vw',cursor:'pointer'}} onClick={() => handleSelectCategory(card.title)}>
               {card.title}
             </div>
           ))}

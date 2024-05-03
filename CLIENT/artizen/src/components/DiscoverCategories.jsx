@@ -39,8 +39,8 @@ const DiscoverCategories = () => {
       <div className='discover-medium'>
         <h5 className='discover-categories-popular-subtitle'>Discover medium</h5>
         <div className='discover-medium-container'>
-          {mediumCards.map(card => (
-            <Link to={`/discover?category=${card.title}`} >
+          {mediumCards.map((card,i) => (
+            <Link key={i}  to={`/discover?category=${card.title}`} >
               <div key={card.id} className={`discover-medium-card discover-medium-card-${card.id}`}>
                 <h4 className='discover-medium-card-title'>{card.title}</h4>
                 <div className='discover-medium-card-overlay'></div>

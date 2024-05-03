@@ -84,9 +84,10 @@ exports.getAllUsers = async (req, res) => {
 };
 
 exports.addNewUser = async (req, res) => {
+    console.log(req.body)
     const users = new User({
-        username: req.body.fullName,
-        pfp: req.body.imageUrl
+        username: req.body.username,
+        pfp: req.body.pfp   
     });
     console.log(users);
     try {
