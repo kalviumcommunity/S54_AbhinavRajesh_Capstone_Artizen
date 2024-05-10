@@ -7,9 +7,13 @@ router.get('/data/artworks', handlers.getAllArtworks);
 router.get('/artworks/:id', handlers.getArtworkById);
 router.post('/artworks', handlers.createArtwork);
 router.put('/artworks/:id', handlers.updateArtwork);
+router.get('/getLikedForums/:username', handlers.getLikedForums);
 router.delete('/artworks/:id', handlers.deleteArtwork);
 router.get('/users', handlers.getAllUsers);
 router.post('/signup', handlers.addNewUser);
+router.post('/likeforums',handlers.likedForum)
+router.post('/removelike', handlers.removeLikedForum)
+router.post('/likeartwork',handlers.likedArtworks)
 router.get('/testimonials', handlers.getAllTestimonials);
 router.post('/testimonials', handlers.createTestimonial);
 router.put('/testimonials/:id', handlers.updateTestimonial);

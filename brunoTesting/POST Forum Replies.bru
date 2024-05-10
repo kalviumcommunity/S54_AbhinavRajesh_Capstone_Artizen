@@ -1,0 +1,20 @@
+meta {
+  name: POST Forum Replies
+  type: http
+  seq: 19
+}
+
+post {
+  url: http://localhost:4000/api/forums/replies/663de85e8ace575e9e2ca377
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+          "content": "test",
+          "author": "Artizen",
+          "date": "2004-09-12T00:00:00.000Z",
+          "_id": "66224d4ca2defbd8444b8924"
+        }
+}

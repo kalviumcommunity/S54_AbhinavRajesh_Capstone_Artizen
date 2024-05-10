@@ -1,0 +1,21 @@
+meta {
+  name: POST Artwork
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:4000/api/artworks
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "title": "Test",
+      "description": "Test Case",
+      "category": "Drawing",
+      "author": "Artizen",
+      "image": "https://res.cloudinary.com/drfowjcg2/image/upload/v1714556477/artizen/rslm9lzncqr9ikingnoz.jpg"
+    }
+}

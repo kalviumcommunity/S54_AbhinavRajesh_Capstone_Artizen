@@ -84,7 +84,7 @@ const Home = () => {
                     <div  className='home-testimonial-container'>
                     <div key={index}>
                       <div className='home-testimonial-container-header'>
-                      {users.map(user => user.username === testimonial.author && (
+                      {users && users.map(user => user.username === testimonial.author && (
                         <img
                           key={user.username}
                           src={user.pfp}

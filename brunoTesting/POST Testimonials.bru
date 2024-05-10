@@ -1,0 +1,20 @@
+meta {
+  name: POST Testimonials
+  type: http
+  seq: 13
+}
+
+post {
+  url: http://localhost:4000/api/testimonials
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "title": "Test",
+      "testimonial": "bruno Test",
+      "likes": 5,
+      "author": "Artizen"
+    }
+}

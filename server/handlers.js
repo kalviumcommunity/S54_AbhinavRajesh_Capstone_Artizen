@@ -45,6 +45,64 @@ exports.getArtworkById = async (req, res) => {
     }
 };
 
+exports.getLikedForums = async (req, res) => {
+    const username = req.params.username
+    console.log(username)
+    try {
+        const response = await User.findOne(
+            {'username':username}
+        );
+        console.log(response);
+        if (response == null) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        res.status(200).json({response,message:'Got Liked Forums'});
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+// exports.likeForum = async (req, res) => {
+//     const { id } = req.params;
+//     try {
+//         // Find the forum by ID
+//         const forum = await Forums.findById(id);
+//         if (!forum) {
+//             return res.status(404).json({ message: 'Forum not found' });
+//         }
+
+//         // Update the likes count
+//         forum.likes += 1; // Increment the likes count
+//         const updatedForum = await forum.save();
+
+//         res.status(200).json(updatedForum);
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// };
+
+// exports.unlikeForum = async (req, res) => {
+//     const { id } = req.params;
+//     try {
+//         // Find the forum by ID
+//         const forum = await Forums.findById(id);
+//         if (!forum) {
+//             return res.status(404).json({ message: 'Forum not found' });
+//         }
+
+//         // Update the likes count
+//         if (forum.likes > 0) {
+//             forum.likes -= 1; // Decrement the likes count
+//             const updatedForum = await forum.save();
+//             res.status(200).json(updatedForum);
+//         } else {
+//             res.status(400).json({ message: 'Forum has no likes to remove' });
+//         }
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// };
+
 exports.updateArtwork = async (req, res) => {
     const { title, description, category, author, image } = req.body;
     if (!title || !description || !category || !author || !image) {
@@ -86,7 +144,9 @@ exports.getAllUsers = async (req, res) => {
 exports.addNewUser = async (req, res) => {
     const users = new User({
         username: req.body.username,
-        pfp: req.body.pfp   
+        pfp: req.body.pfp,
+        likedforum: [],
+        likedartworks: []
     });
     console.log(users);
     try {
@@ -97,6 +157,58 @@ exports.addNewUser = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+exports.likedForum = async (req, res) => {
+    const { forumId, username } = req.body;
+    try {
+        const response1 = await User.findOneAndUpdate(
+            { "username": username },
+            { "$push": { "likedforum": forumId } },
+            { new: true }
+        );
+        const response2 = await Forums.findByIdAndUpdate(
+            forumId,
+            { $inc: { likes: 1 } },
+            { new: true }
+        );
+        console.log(response2);
+        res.status(200).json({ message: "Forum added to liked forums successfully", user: response1 });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+exports.removeLikedForum = async (req, res) => {
+    const { forumId, username } = req.body;
+    console.log(req.body); 
+    try {
+        const response1 = await User.findOneAndUpdate(
+            { "username": username },
+            { "$pull": { "likedforum": forumId } },
+            { new: true }
+        );
+        const response2 = await Forums.findByIdAndUpdate(
+            forumId,
+            { $inc: { likes: -1 } },
+            { new: true }
+        );
+        console.log(response1);
+        console.log(response2);
+        res.status(200).json({ message: "Forum removed from liked forums successfully", data: response1 });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+exports.likedArtworks = async (req, res) => {
+    try {
+        res.send("Artwork Liked")
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 
 exports.getAllTestimonials = async (req, res) => {
     try {

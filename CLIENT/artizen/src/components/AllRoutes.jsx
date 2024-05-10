@@ -12,6 +12,7 @@ import DiscoverCategories from './DiscoverCategories'
 import ArtworkGrid from './Discover'
 
 
+
 const AllRoutes = () => {
 
   return (
