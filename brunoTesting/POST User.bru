@@ -1,0 +1,20 @@
+meta {
+  name: POST User
+  type: http
+  seq: 8
+}
+
+post {
+  url: http://localhost:4000/api/signup
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "username": "Test User1",
+      "pfp": "https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18yZVpmZEZOVDhZVlFYR3RwYzlYdWhmc0VJODkifQ",
+      "likedforum": [],
+      "likedartworks": []
+    }
+}

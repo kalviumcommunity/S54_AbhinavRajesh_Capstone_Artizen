@@ -9,18 +9,18 @@ import 'react-toastify/dist/ReactToastify.css';
 import uploadIcon from '../assets/uploadicon.png';
 import { addImageToCloudinary } from './cloudinary';
 import { toast } from 'react-toastify';
-import { useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Masonry from "react-responsive-masonry"
 
 Modal.setAppElement('#root');
 
-const ArtworkGrid = ({ selectedCategory }) => {
+const ArtworkGrid = () => {
   
   const { user } = useClerk();
-  console.log(user);
   const [users, setUser] = useState([]);
   const [artworks, setArtworks] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [clicked, setClicked] = useState(null)
   const containerRef = useRef(null);
   const [userData, setUserData] = useState({
     username: '',
@@ -40,6 +40,9 @@ const ArtworkGrid = ({ selectedCategory }) => {
     { title: 'Digital Art', id: 4 },
     { title: 'Photography', id: 5 }
   ];
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const selectedCategory = searchParams.get('category');
 
   const [imagePreview, setImagePreview] = useState(null);
   const [containerWidth, setContainerWidth] = useState(0);
@@ -103,15 +106,22 @@ const ArtworkGrid = ({ selectedCategory }) => {
     }));
   };
 
+  const handleCategorySelect = (categoryTitle) => {
+    if (clicked === categoryTitle) {
+      setClicked(null);
+    } else {
+      setClicked(categoryTitle);
+    }
+  };
+  
+
   const handleUpload = async () => {
     try {
-      // Check if user's fullName exists in the users array
       const usernames = users.map(u => u.username);
       const isUserExist = usernames.includes(user.fullName);
 
       console.log(isUserExist)
 
-      // If user doesn't exist in the users array, post user data to the database
       if (!isUserExist) {
         await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/signup`, {
           username: user.fullName,
@@ -119,12 +129,10 @@ const ArtworkGrid = ({ selectedCategory }) => {
         });
       }
 
-      // Upload artwork
       const imageUrl = await addImageToCloudinary(formData.image);
       formData.image = imageUrl[0];
       await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/artworks`, formData);
 
-      // Reset form data
       setFormData({
         title: '',
         category: '',
@@ -133,7 +141,6 @@ const ArtworkGrid = ({ selectedCategory }) => {
         description: '',
       });
 
-      // Close modal and show success message
       toast.success('Artwork Submitted Successfully');
       setModalIsOpen(false);
     } catch (error) {
@@ -168,13 +175,17 @@ const ArtworkGrid = ({ selectedCategory }) => {
         <div>
           <input placeholder='Search' style={{marginBottom:'5vh',width:'40vw',borderRadius:'50px',height:'5vh',paddingLeft:'1.3vw',fontSize:'1.5vw',border:'none'}} type="text" name="" id="" />
         </div>
-        <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:'30px',marginBottom:'10vh'}}>
-          {categories.map (card => (
-            <div style={{color:'white',background:'#222222',width:'10vw',height:'6vh',borderRadius:'50px',display:'flex',justifyContent:'center',alignItems:'center',fontSize:'1.2vw',cursor:'pointer'}} onClick={() => handleSelectCategory(card.title)}>
-              {card.title}
-            </div>
-          ))}
-        </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '30px', marginBottom: '10vh' }}>
+            {categories.map((card, i) => (
+              <div key={i}>
+                <Link to={clicked === card.title ? '/discover' : `/discover?category=${card.title}`} onClick={() => handleCategorySelect(card.title)}>
+                  <div style={{ color: 'white', background: '#222222', width: '10vw', height: '6vh', borderRadius: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.2vw', cursor: 'pointer' }}>
+                    {card.title}
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
           <Masonry columnsCount={3} gutter="20px">
                 {artworks.map((image, i) => (
                     <img
@@ -184,7 +195,6 @@ const ArtworkGrid = ({ selectedCategory }) => {
                     />
                 ))}
             </Masonry>
-        {/* </div> */}
         {user && (
           <motion.button whileHover={{ scale: 1.1 }} className="upload-button" onClick={handleUploadButtonClick}>
             <img style={{ width: '50px', paddingRight: '10px' }} src={uploadIcon} alt="Upload" /> Upload

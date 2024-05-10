@@ -1,0 +1,22 @@
+meta {
+  name: POST forums
+  type: http
+  seq: 17
+}
+
+post {
+  url: http://localhost:4000/api/forums
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+      "title": "Test",
+      "question": "how to test in bruno",
+      "author": "Artizen",
+      "date": "2024-04-21T00:00:00.000Z",
+      "likes": 0,
+      "replies": []
+    }
+}

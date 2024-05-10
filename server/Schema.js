@@ -32,8 +32,16 @@ const userSchema = new mongoose.Schema({
     pfp: {
         type: String,
         required: true,
-    }
-})
+    },
+    likedforum: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'forumsdatas'
+    }],
+    likedartworks: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'artworks'
+    }]
+});
 
 const testimonialSchema = new mongoose.Schema({
     title: {

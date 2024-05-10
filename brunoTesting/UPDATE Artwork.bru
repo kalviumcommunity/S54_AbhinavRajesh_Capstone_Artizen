@@ -1,0 +1,21 @@
+meta {
+  name: UPDATE Artwork
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:4000/api/artworks/66320e3ebf089ee80e3e1013
+  body: json
+  auth: none
+}
+
+body:json {
+    {
+      "title": "Abhinav",
+      "description": "NA NA MIIIIII NA NA MIIIII",
+      "category": "Drawing",
+      "author": "ARUN KUMAR S",
+      "image": "https://res.cloudinary.com/drfowjcg2/image/upload/v1714556477/artizen/rslm9lzncqr9ikingnoz.jpg"
+    }
+}

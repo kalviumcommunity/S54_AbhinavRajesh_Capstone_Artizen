@@ -1,0 +1,18 @@
+meta {
+  name: POST Like Forum
+  type: http
+  seq: 9
+}
+
+post {
+  url: http://localhost:4000/api/likeforums
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "forumId" : "662341f4100b17bcac1d9e27",
+    "username" : "Artizen"
+  }
+}
